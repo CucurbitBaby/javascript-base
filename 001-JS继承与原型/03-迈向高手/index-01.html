@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples Object.create与__proto__</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+/*
+  // Object.create()
+  let user = {
+    show() {
+      return this.name;
+    }
+  };
+
+  // prototype
+  // 为单个对象更改他的原型对象
+  // 有几种方式
+  // 以user为原型, 创建一个新对象
+  let hd = Object.create(user);
+    
+  console.log(hd);
+  console.log(hd.__proto__ === user);   // true
+
+  hd.name = "前端人";
+ console.log(hd.show());      // 前端人
+
+*/
+
+
+  // 参考: https://segmentfault.com/a/1190000021456281
+  // 下面这么个对象就是完整的属性描述符。
+
+  // {
+  //     configurable: false,
+  //     enumberable: false,
+  //     value: 'value',
+  //     writable: false,
+  //     get: function() {
+  //         console.log('get')
+  //     },
+  //     set: function(val) {
+  //         console.log('set')
+  //     }
+  // }
+
+
+/*
+
+  let user = {
+    show() {
+      return this.name;
+    }
+  };
+
+  // prototype
+  // 为单个对象更改他的原型对象
+  // 定义对象的原型, 不能获取
+  let hd = Object.create(user, {
+    name: {
+      value: "直接定义原型特征"
+    }
+  });
+    
+  console.log(hd);
+  console.log(hd.__proto__ === user);   // true
+
+  hd.name = "前端人";
+ console.log(hd.show());      // 前端人
+
+//*/
+
+/*
+
+
+  // hd.__proto__ =  有值设置, 无值获取
+  let user = {
+    show() {
+      return this.name;
+    }
+  };
+
+  let hd = {
+    name: "前端人"
+  }
+ 
+  hd.__proto__ = user;
+
+  console.log(hd.show());      // 前端人
+  console.log(hd.__proto__)    // {show: ƒ}   获取了
+
+//*/
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples dom操作初探</title>
+  <style type="text/css">
+  </style>
+</head>
+
+<body>
+  <button style="width: 100px;height: 50px; background: linear-gradient(to left, #999, #000, #432, #fcc); position: fixed; right: 0; top: 50%;text-align: center; line-height: 50px; color: #fff; border: noen;">加速</button>
+  <script type="text/javascript">
+  var btn = document.getElementsByTagName('button')[0];
+  var div = document.createElement('div');
+  document.body.appendChild(div);
+  div.style.width = "100px";
+  div.style.height = "100px";
+  div.style.backgroundColor = "red";
+  div.style.position = "absolute";
+  div.style.left = "0";
+  div.style.top = "0";
+  
+  // var speed = 1;
+  // 加速运动, 每次的速度都不同  (每次的步长, 递增)
+  // setInterval(function () {
+  //   speed += speed/20;
+  //   div.style.left = parseInt(div.style.left) + speed + "px";
+  //   div.style.top = parseInt(div.style.top) + speed + "px";
+  // }, 50)
+  
+  // 叫停
+  // var timer = setInterval(function () {
+  //   speed += speed/20;
+  //   div.style.left = parseInt(div.style.left) + speed + "px";
+  //   div.style.top = parseInt(div.style.top) + speed + "px";
+  //   if(parseInt(div.style.top) > 200 && parseInt(div.style.left) > 200) {
+  //     clearInterval(timer)
+  //   }
+  // }, 50)
+
+  // 绑定事件
+  // document.onkeydown = function(e) {
+  //   // e事件源对象: 1.这个事件发生的时候我的鼠标在哪儿? 键盘点击的什么键? ...
+  //   switch(e.keyCode) {
+  //     case 38:
+  //       div.style.top = parseInt(div.style.top) - s + "px";
+  //       break;
+  //     case 40:
+  //       div.style.top = parseInt(div.style.top) + s + "px";
+  //       break;
+  //     case 37:
+  //       div.style.left = parseInt(div.style.left) - s + "px";
+  //       break;
+  //     case 39:
+  //       div.style.left = parseInt(div.style.left) + s + "px";
+  //       break;
+  //   }
+  // }
+
+  // 仿俄罗斯方块
+  // 什么叫摁住? 这一秒触发时间 和 下一秒触发时间 和 再促发时间 间隔十分短暂
+  // 十分短暂认为摁住了 加速了
+  
+  btn.onclick = function () {
+    speed+=100;
+  }
+
+  var speed = 5;
+  document.onkeydown = function(e) {
+    // e事件源对象: 1.这个事件发生的时候我的鼠标在哪儿? 键盘点击的什么键? ...
+    switch(e.keyCode) {
+      case 38:
+        div.style.top = parseInt(div.style.top) - speed + "px";
+        break;
+      case 40:
+        div.style.top = parseInt(div.style.top) + speed + "px";
+        break;
+      case 37:
+        div.style.left = parseInt(div.style.left) - speed + "px";
+        break;
+      case 39:
+        div.style.left = parseInt(div.style.left) + speed + "px";
+        break;
+    }
+
+
+  }
+
+  // 逻辑
+  // 每次按下的时候 记录一个新的时间片段 减去 上一次执行时的时间片段
+  // 结果小于一定的毫秒数的话,  我们让一个计数器++, 当连续小于时, 就让计数器连续++
+  // 如果计数器++到一定数值, 认为是连续摁了, 再摁的时候就要加速了
+  // 每一次按的时候判断一下 这一次的毫秒数 - 上一次的毫秒数 时间间隔过大, 计数器重新归零
+  </script>
+</body>
+
+</html>

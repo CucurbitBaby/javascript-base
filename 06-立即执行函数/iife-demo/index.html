@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 立即执行函数</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+
+//*
+  // 立即执行函数: 只被执行一次之后就销毁, 立即执行函数, 其他函数都不能手动销毁
+  // (function(){
+  //   var a = 111;
+  //   var b = 222;
+  //   console.log(a+b);
+  // }())
+  // 形式2:函数可以有名字
+  // 形式3:函数可以传参
+  // (function (a, b, c){  // 形参
+  //   console.log(a+b+c);
+  // }(1, 2, 3))           // 实参
+
+  // 形式4:函数可以有返回值
+  // var num = (function (a, b, c){  // 形参
+  //   return (a+b+c);
+  // }(1, 2, 3))           // 实参
+
+
+  // 立即执行函数不是js初衷设计, 是老百姓发掘的(就和css的float一样)
+  // 利用()的一个特性
+  // 官方给出的两种写法: 
+  // ( function (){}() )  w3c 建议第一种
+  // ( function (){})()  
+
+  // 第3种-第5种
+  // function test() {   // 报错: Uncaught SyntaxError: Unexpected token ')'
+  //   var a = 123;
+  // }()
+
+  // 为什么报错? 只有表达式才能被执行符号执行
+  // function test() {  
+  //   var a = 123;
+  // }
+  // test();
+  // 123;  也叫表达式
+  // 234;  也叫表达式
+  // 1+2;  也叫表达式
+  // 所以一个test()能执行, 一个单独的函数引用
+  // function test() {   它叫函数声明, 它不能被执行
+  //   var a = 123;
+  // }()
+
+  // 它是函数表达式, 能被执行
+  // var test = function() {
+  //   console.log('a');
+  // }()
+  // 能被执行符号()执行的 表达式, 这个函数的名字就会被自动忽略
+  // var test = function () {  此时test还是一个函数的引用等待被执行
+  //   cosnole.log('a')
+  // }
+
+  // var test = function () {   // 这种写法和上面的立即执行函数没什么区别
+  //   cosnole.log('a')
+  // }();
+  // 再一次 test 他就不再代表函数了, 被执行符号()执行的 表达式, 他会自动放弃函数名称
+
+  // function test() {      // 本来不是函数表达式, 不能被执行
+  //   console.log('a');
+  // };
+  // + function test() {      // 前面加个 + (正号)就是一个表达式了, 它就能执行了
+  //   console.log('a');      // "-", "!", "&& || 前面要东西"
+  // }();
+
+  // ()也是数学计算符
+  // (function test() {})   // 变成表达式了
+  // (function test() {     // 就能被执行
+  //    console.log(1);
+  // })();
+
+  // 先看最外面的()          // 里面的代码变成表达式了
+  // (function test() {     // 就能被里面的()执行, 立即执行函数test名写不写没有意义
+  //    console.log(1);
+  // }());
+
+  // function test(a, b, c) { // 光这样写的话肯定报错, Uncaught SyntaxError: Unexpected token ')'
+  //   cosnole.log(a+b+c)
+  // }();
+  // 但是
+  // function test(a, b, c) { 
+  //   cosnole.log(a+b+c)
+  // }(1, 2, 3);
+  // 系统会是识别成:
+  // function test(a, b, c) { 
+  //   cosnole.log(a+b+c)
+  // }
+  // 
+  // 
+  // (1, 2, 3);   // ()暂时不会当成执行符, 但是也没执行 test还在
+  function test(a, b, c) { 
+    cosnole.log(a+b+c)
+  }(1, 2, 3);
+
+
+//*/
+
+  </script>
+</body>
+
+</html>
+<script type="text/javascript">
+/*
+
+  立即执行函数
+  function a() {
+  }
+  function b() {
+  }
+  这两个函数除非等我的当前脚本所有JS执行完毕, 否则永远无法释放, 一直被等待被执行。
+
+  有的函数只需要执行一次, 咋办呢? 
+  用立即执行函数 - 针对初始化功能的函数, 卸磨杀驴。
+  (function(){
+    
+  }())
+
+*/
+</script>

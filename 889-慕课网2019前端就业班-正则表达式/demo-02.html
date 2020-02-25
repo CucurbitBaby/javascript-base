@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>去除字符串首位空白字符</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+
+// var str = "     Alex      ";
+// var pattern = /^\s*/;
+// console.log('|' + str.replace(pattern, '') + '|');      //    |Alex      |
+
+// 首
+// var str = "Alex      ";
+// var pattern = /^\s+/;         // replace() 不管有没有匹配到都会替换的
+// console.log('|' + str.replace(pattern, '') + '|');      //    |Alex      |
+
+// 尾
+// var str = "     Alex      ";
+// var pattern = /\s+$/;         // replace() 不管有没有匹配到都会替换的
+// console.log('|' + str.replace(pattern, '') + '|');      // |     Alex|
+
+// 第一种: 做一种大而全的,  
+// 首或尾 + 全局
+// var str = "     Alex      ";
+// var pattern = /^\s+|\s+$/g;         // replace() 不管有没有匹配到都会替换的
+// console.log('|' + str.replace(pattern, '') + '|');      // |Alex|
+
+
+// 第二种: 替换两次不就行了
+// var str = "      Alex      ";
+// var pattern1 = /^\s+/;         // replace() 不管有没有匹配到都会替换的
+// var pattern2 = /\s+$/;         // replace() 不管有没有匹配到都会替换的
+// console.log('|' + str.replace(pattern1, '').replace(pattern2, '') + '|');      // |     Alex|
+
+
+// 有时候一个正则解决所有问题,  会适得其反, 不一定要一个高大全的正则
+// 第一种方法是第二种的4倍
+
+
+// 封装
+var str = "      Alex      ";
+function trim(str) {
+  return str.replace(/^\s+/, '').replace(/\s+$/, '');
+}
+console.log(trim(str));
+
+// 可以写一个trimLeft, trimRight来组合起来使用这个trim功能
+
+</script>
+</body>
+</html>

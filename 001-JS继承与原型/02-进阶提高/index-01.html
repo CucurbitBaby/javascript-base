@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 总结一下原型链</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  let arr = []; // new Array
+  console.log(arr.__proto__.__proto__ === Object.prototype); // true
+
+
+  /*
+   
+  1-所有的引用类型(数组、对象、函数)都具有对象特性，即可自由扩展属性
+
+  2-所有的引用类型(数组、对象、函数)都有一个 __proto__ 属性，属性值是一个普通的对象：隐式原型
+
+  3-所有的函数都有一个prototype属性，属性值是一个普通的对象：显示原型
+
+  4-所有的引用类型(数组、对象、函数)__proto__属性值 指向 它的构造函数的"prototype"属性值
+
+
+  每个函数对象都有名为 prototype 的属性 (Function.prototype函数对象是个例外，没有prototype属性)  用于引用原型对象。
+  此原型对象又有名为 constructor 的属性，它反过来引用函数本身。
+  这是一种循环引用,而函数也是对象具有__proto__属性(隐式原型) === Function
+  Animal._proto__. constructor就指向了构造它的构造函数
+
+  Animal.prototype.constructor === Animal       //true
+  Animal.__proto__.constructor === Function     //true
+
+  */
+
+
+  let a = {
+    name: "name A",
+    show() {
+      console.log(this.name);
+    }
+  };
+  let b = {
+    name: "name B"
+  };
+  let c = {
+    name: "name C"
+  };
+
+  let d = {
+    name: "name D"
+  };
+
+  // 既然原型是一个对象, 理论上来讲, 任何对象都可以变成另一个对象的原型
+  // 叔叔是一个人, 任何人都可以成为别人的叔叔
+  // 现在不可以, 30岁就可以了
+  Object.setPrototypeOf(b, a);
+  Object.setPrototypeOf(c, a);
+  Object.setPrototypeOf(d, a);
+  console.log(b);
+
+  // 如果给a添加方法, 那就会影响所有的子集继承者们, b可以使用show
+  b.show();
+
+  // 如果有c对象, 只要保证c对象继承b的话, c可以使用show
+  // 然后我们的精力就放到了父级的b对象了
+  c.show();
+  d.show();
+
+
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>url地址</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+
+// URL 复杂性害死很高的
+// http://localhost:8080/demo-05.html,  http://www.imooc.com/article
+// (协议:\/\/)主机名(:端口号可选)(/路径/article)
+// (^()()()()$)
+// (^(https?:\/\/)?([^:\/]+)(:\d+)?(\/.*)?$)        // 简化版的url 每一个部分都严格一点的匹配模式 ftp|mailto|file:///
+
+
+/*
+
+  //课程的代码:
+  8.URL
+  (协议:\/\/)主机名(:端口号)(/路径)
+  ftp|http|https|mailto|file:///
+  /^(https?:\/\/)?([^:\/]+)(:\d+)?(\/.*)?$/
+
+  匹配主机名
+  /[^:\/]+/
+  -www.-imos-oc.casfasf.sadasd.co-m
+  ai
+  /[a-z0-9]|[a-z0-9][-a-z0-9]*[a-z0-9]/i
+  /^([a-z0-9]\.|[a-z0-9][-a-z0-9]*[a-z0-9]\.)*(com|edu|gov|net|org|[a-z]{2})$/i
+  /^([a-z0-9]\.|[a-z0-9][-a-z0-9]*[a-z0-9]\.)*([a-z]+)$/i
+
+  var regexp = {
+   'chinese': /[\u4e00-\u9fa5]/, // 
+   'qq': /^[1-9]\d{4,}$/,
+   ....
+  };
+  regexp.qq
+
+
+*/
+</script>
+</body>
+</html>

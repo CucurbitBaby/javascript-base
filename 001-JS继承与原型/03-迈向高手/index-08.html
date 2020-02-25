@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 禁止constructor被遍历</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+
+// function Animal(){
+
+// }
+// var  anim = new Animal();
+
+// console.log(anim.__proto__.constructor === Animal);   // true
+
+/*
+
+每个函数对象都有名为 prototype 的属性 (Function.prototype函数对象是个例外，没有prototype属性)  用于引用原型对象。
+此原型对象又有名为 constructor 的属性，它反过来引用函数本身。
+这是一种循环引用,而函数也是对象具有__proto__属性(隐式原型) === Function
+Animal._proto__. constructor就指向了构造它的构造函数
+
+Animal.prototype.constructor === Animal       //true
+Animal.__proto__.constructor === Function     //true
+
+
+*/
+
+
+
+  function User() {}
+
+  User.prototype.name = function() {
+    console.log('user name method!!!');
+  }
+  
+  // let hd = new User();
+  // hd.name();
+
+  // Admin也想用name()方法
+  function Admin() {};
+
+  // console.dir(Admin)
+  // ƒ Admin()
+  // length: 0
+  // name: "Admin"
+  // arguments: null
+  // caller: null
+  // prototype: User
+  //    role: ƒ ()
+  //    constructor: ƒ Admin()
+  // Admin.prototype.__proto__ = User.prototype; 
+  Admin.prototype = Object.create(User.prototype); 
+  Admin.prototype.constructor = Admin;              // 继承了之后修正constructor
+
+  // 看一下属性特征
+  // Object.getOwnPropertyDescriptors() 方法用来获取一个对象的所有自身属性的描述符。
+  console.log(Object.getOwnPropertyDescriptors(Admin.prototype));
+  // {constructor: {…}}
+  //    constructor:
+  //        value: ƒ Admin()
+  //        writable: true
+  //        enumerable: true      // 可以遍历
+  //        configurable: true
+
+  Object.defineProperty(Admin.prototype, 'constructor', {
+    value: Admin,
+    enumerable: false   // constructor属性特征发生改变, 存在不可遍历
+  })
+
+  Admin.prototype.role = function() {
+    console.log('超级管理权限  被别人用了吗?');
+  }
+  console.dir(Admin);   // 找不到constructor了
+  console.dir(Admin.prototype.constructor);   // 但是继承了 User 所以有 ƒ User()  
+  // ƒ Admin()
+  // length: 0
+  // name: "Admin"
+  // arguments: null
+  // caller: null
+  // prototype: User
+  //    role: ƒ ()
+  //    __proto__:
+  //        name: ƒ ()
+  //        constructor: ƒ User()
+
+  let a = new Admin();
+  for(const key in a) {
+    console.log(key);
+    // constructor
+    // role
+    // name
+  }
+  
+
+
+
+  </script>
+</body>
+</html>

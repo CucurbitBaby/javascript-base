@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>简单的转义字符</title>
+</head>
+<body>
+<script>
+  // 匹配 \ 转意字符取消/的歧义
+  // var str = '// 我是注释';
+  // var pattern = /\/\//;
+  // console.log(pattern.exec(str));
+
+  // // \
+  // // var str = '\\\\';
+  // // var str = '\';       // 报错把分号转意了
+  // var str = '\\\\';       // 把\本身转意之后就剩2条 \\了
+  // var pattern = /\\\\/;
+  // console.log(str);
+  // console.log(pattern.exec(str));
+
+  // // 普通字符也可以转换成特殊字符 n加\ -> 换行了
+  // // var str = 'nba';
+  // // var pattern = /\n/;
+  // // 匹配换行
+  // var str = '1.html\n2.css\n3.js';
+  // var pattern = /\n/;
+  // console.log(str);
+  // console.log(pattern.exec(str));   
+
+  // Tab键盘
+  // var str = '  js';      // Tab可能是2个空格或者四个空格
+  // var pattern = /\t/;
+  // console.log(pattern.exec(str));
+
+  // \x61 === a, \x62 === b, \x0A === \n,  asic码
+  // var str = 'a\nb';
+  // var pattern = /\x61\x0A\x62/;
+  // console.log(pattern.exec(str));
+
+  // 4位unicode === Tab键 unicode匹配中文
+  // var str = '  js';
+  // var pattern = /\u0009/;
+  // console.log(pattern.exec(str));
+
+  // 帅总是在变, 中文有个范围\u4e00-\u9fa5 unicode
+  // var str = 'Alex帅';
+  // var pattern = /衰/;
+  // \u4e00-\u9fa5
+  
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>Examples 创建正则表达式的两种方式</title>
+</head>
+<body>
+  
+<script>
+  // 字面量或直接量
+  // []
+  // {}
+  // /js/
+  // // 构造函数
+  // new Array()
+  // new Object()
+  // // regular expression
+  // new RegExp()
+
+  // var str = 'I love js';
+  // var pattern = /js/;
+  // '3.4'
+  // /js5_正则 ,;!@./
+
+
+/*
+  
+  var str = 'I love js';
+  var pattern = /js/;
+  // test exec
+  console.log(pattern.test(str));
+  console.log(pattern.exec(str));
+  // ["js", index: 7, input: "I love js", groups: undefined]
+  //   0: "js"
+  //   index: 7
+  //   input: "I love js"
+  //   groups: undefined
+  //   length: 1
+  //   __proto__: Array(0)
+
+//*/
+
+  // 找不到返回null
+  // var str = 'I love Js';
+  // var pattern = /js/;
+  // // test exec
+  // console.log(pattern.test(str));
+  // console.log(pattern.exec(str));
+
+  // var str = 'I love Js';
+  // var pattern = /Js/;
+  // console.log(pattern.test(str));
+  // console.log(pattern.exec(str));
+  // // 模式修饰符号
+  // // i ignoreCase 不区分大小写
+  // // g global     全局匹配
+  // // m multiline  多行匹配
+
+
+  // 模式的修饰符
+  // var str = 'I love Js';
+  // var pattern = /js/i;          // 匹配到字符串中的Js了
+  // console.log(pattern.test(str));
+  // console.log(pattern.exec(str));
+
+  // 组合顺序没有关系
+  // /js/ig
+  // /js/gi
+  // /js/igm
+  // /js/img
+
+  // 构造函数的写法
+  // var str = 'I love js';
+  // var pattern = new RegExp('js');
+  // console.log(pattern.test(str));
+  // console.log(pattern.exec(str));
+
+  // 构造函数的写法 添加模式
+  // var str = 'I love Js';
+  // var pattern = new RegExp('js', 'i');
+  // console.log(pattern.test(str));
+  // console.log(pattern.exec(str));
+
+  // /js/i
+  // new RegExp('js', 'i')
+  // 推荐使用字面量的方式, 不是绝对的
+  
+  // /js/i /规则/写死了  这样写匹配不到'love'
+  // var str = 'I love Js';
+  // var userInput = 'love';
+  // var pattern = /userInput/i;
+
+  // 也不行
+  // var str = 'I love Js';
+  // var userInput = 'love';
+  // var pattern = '/' + userInput + '/i';
+  // console.log(typeof pattern);    // string
+
+  // 通过构造函数 ok啦
+  var str = 'I love Js';
+  var userInput = 'love';
+  var pattern = new RegExp(userInput, 'i');
+  // console.log(pattern);
+  // console.log(typeof pattern);
+  console.log(pattern.exec(str));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>RegExp对象</title>
+</head>
+<body>
+
+<script>
+  // 构造函数的方式: 模式可以作为变量传递
+  // /js/
+  // new RegExp('js')
+  // var className = 'box';
+  // new RegExp(className)
+
+  // 构造函数创建Reg对象 转义字符一定要双重转义
+  // console.log(new RegExp('\\b'));           //      /\b/
+  // 匹配2个\    /\\/
+  // var pattern = new RegExp('\\\\')          //      /\\/
+  // console.log(pattern);    
+
+  // RegExp实例方法
+  // var pattern = /js/;                // 实例
+  // var pattern = new RegExp('js');    // 实例
+  // pattern.test pattern.exec
+
+  // 实例方法 exec()   index匹配到字符串中的第index的位置, 
+  // var str = 'js js js';
+  // var pattern = /js/;
+  // console.log(pattern.exec(str));       // ["js", index: 0, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));       // ["js", index: 0, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));       // ["js", index: 0, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));       // ["js", index: 0, input: "js js js", groups: undefined]
+  // ...
+
+  // exec()这个实例方法, 自身的特点
+  // var str = 'js js js';
+  // var pattern = /js/g;
+  // console.log(pattern.exec(str));          // ["js", index: 0, input: "js js js", groups: undefined] 
+  // console.log(pattern.exec(str));          // ["js", index: 3, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));          // ["js", index: 6, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));          // null
+  // console.log(pattern.exec(str));          // ["js", index: 0, input: "js js js", groups: undefined]
+  // pattern.lastIndex这个属性非全局匹配模式的时候,都是0,不变化的
+  // 匹配上的字符的下一个位置
+  // 一但要求全局匹配的时候, 匹配完第一次pattern.lastIndex => 2,下一次在执行exec的时候就会读取lastIndex 从2开始查找
+  // 匹配完成之后,返回null, 就会自动把lastIndex重置为0
+
+  // 没有问题的
+  // var str = 'js js js';
+  // var pattern = /(j)s/;
+  // console.log(pattern.exec(str));
+  // console.log(pattern.exec(str));
+  // console.log(pattern.exec(str));
+  // console.log(pattern.exec(str));
+
+  // 加了全局匹配之后子项分组内容还是能匹配出来的
+  // 后面说差异
+  // var str = 'js js js';
+  // var pattern = /(j)s/g;
+  // console.log(pattern.exec(str));     // (2) ["js", "j", index: 0, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));     // (2) ["js", "j", index: 3, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));     // (2) ["js", "j", index: 6, input: "js js js", groups: undefined]
+  // console.log(pattern.exec(str));     // null
+
+  // 我要一次全部找出来, 而不是一个一个找
+  // 分析执行一次exec找到一个js,在执行一个就会找到第二2个 用while循环
+  // var str = '1.js 2.js 3.js';
+  // var pattern = /js/g;
+  // var total = 0, match = '', result;
+
+  // while ((result = pattern.exec(str)) != null) {
+  //  total++;
+  //  match += '第' + total + '个匹配到的是：' + result[0] + ', 它的位置是：' + result.index + '\n';
+  // }
+  // match += '共找到' + total + '处匹配\n';
+  // console.log(str);     // 1.js 2.js 3.js
+
+  // console.log(match);
+  // 第1个匹配到的是：js, 它的位置是：2
+  // 第2个匹配到的是：js, 它的位置是：7
+  // 第3个匹配到的是：js, 它的位置是：12
+  // 共找到3处匹配
+
+  // // test() lastIndex和exec()原理 要全局才有特性
+  // var str = 'js js js';
+  // var pattern = /js/g;
+  // console.log(pattern.test(str));
+  // console.log(pattern.test(str));
+  // console.log(pattern.test(str));
+  // console.log(pattern.test(str)); // false
+  // console.log(pattern.test(str)); // true
+
+  // var pattern = new RegExp('a\\nb')
+  // console.log(pattern.toString());            // /a\nb/ => 从Object原型继承来的toString方法  字面量形式字符串
+  // console.log(pattern.toLocaleString());      // /a\nb/ => 从Object原型继承来的toString方法  一样的其他语言的方法
+  // console.log(pattern.valueOf() === pattern); // true  正则本身
+
+  // RegExp实例属性
+  // var str = 'js js js';
+  // var pattern = new RegExp('\\b', 'i');
+  // console.log(pattern.ignoreCase);        // true 
+  // console.log(pattern.global);            // false 
+  // console.log(pattern.multiline);         // false 
+  // console.log(pattern.source);            // \b     返回字面量形式的字符串
+  // console.log(pattern.lastIndex);         // 0      
+
+  // lastIndex
+  // var str = 'js js js';
+  // var pattern = /js/;
+  // console.log(pattern.lastIndex);     // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);     // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);     // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);     // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);     // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);     // 0
+
+  // 开启全局
+  // var str = 'js js js';
+  // var pattern = /js/g;
+  // console.log(pattern.lastIndex);        // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);        // 2
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);        // 5
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);        // 8
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);        // 0
+  // pattern.test(str);
+  // console.log(pattern.lastIndex);        // 2
+
+  // 构造函数属性  兼容性很差
+  // var str = 'js js js';
+  // var pattern = /(j)s/;
+  // // console.log(RegExp.input);       // 待匹配的字符串是空
+  // pattern.exec(str);                  // 执行了exec或者test 构造函数属性才会被填充进去
+
+  // console.log(RegExp.input);          // 待匹配的字符串
+  // console.log(RegExp.$_);             // 待匹配的字符串的别名: 字母、_、$开头，后面字母、_、$、数字
+  // console.log(RegExp['$_']);          // 待匹配的字符串的别名: 字母、_、$开头，后面字母、_、$、数字
+
+  // console.log(RegExp.lastMatch);      // js 含有最后匹配到的字符串
+  // console.log(RegExp['$&']);          // js 含有最后匹配到的字符串 别名
+
+  // console.log(RegExp.leftContext);    // 空 含有最后匹配到的字符串 左边剩余的字符
+  // console.log(RegExp['$`']);          // 空 别名
+
+  // console.log(RegExp.rightContext);   // js js 含有最后匹配到的字符串 右边边剩余的字符
+  // console.log(RegExp["$'"]);          // js js 含有最后匹配到的字符串 右边边剩余的字符  别名
+
+  // console.log(RegExp.lastParen);      // j 上一次匹配的子选项(分组)  
+  // console.log(RegExp["$+"]);          // j 上一次匹配的子选项(分组)  别名
+
+  // exec
+  // /\1\2/
+  // console.log(RegExp.$1);
+
+  // 分组区别
+  // var str = 'js js js';
+  // var pattern = /(j)s/
+  // pattern.exec(str);
+  // console.log(RegExp.$1);   // j
+  
+</script>
+</body>
+</html>

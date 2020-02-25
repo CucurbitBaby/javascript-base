@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 继承对新增对象的影响</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+
+/*
+
+
+  function User() {}
+
+  User.prototype.name = function() {
+    console.log('user name method!!!');
+  }
+  
+  let hd = new User();
+  hd.name();
+
+  // Admin也想用name()方法
+  function Admin() {};
+  let a = new Admin();      // 先实例化了，还没继承呢
+  // a.name();                 // a.name is not a function 放最下面也是报错
+  // a.role();
+
+  // console.log(Admin.prototype === Object.prototype);    // true
+
+  // Admin.prototype  = User.prototype;       // 咋一看, 只是这个简单的场景可以使用而已
+  // Admin.prototype = User.prototype; // 好处是保留自己的, 继承父级的
+  Admin.prototype = Object.create(User.prototype); // 创建新的对象 / 还有原来的对象呢,  这句继承代码一定要放在 new Admin()实例化之前
+  // 如果Admin有一个后台角色的方法
+  Admin.prototype.role = function() {
+    console.log('超级管理权限  被别人用了吗?');
+  }
+
+  // a.name();                 // a.name is not a function
+
+  // let a = new Admin();
+  // a.name();
+  // a.role();
+
+
+  
+
+
+
+//*/
+
+
+  function User() {}
+
+  User.prototype.name = function() {
+    console.log('user name method!!!');
+  }
+  
+  let hd = new User();
+  hd.name();
+
+  // Admin也想用name()方法
+  function Admin() {};
+  let a = new Admin();      // 先实例化了，还没继承呢
+  // a.name();                 // a.name is not a function  放继承之后不会报错哟
+  // a.role();                 // a.name is not a function
+
+  // console.log(Admin.prototype.__proto__ === Object.prototype);    // true
+
+  // Admin.prototype  = User.prototype;       // 咋一看, 只是这个简单的场景可以使用而已
+  Admin.prototype.__proto__ = User.prototype; // 好处是保留自己的, 继承父级的
+  // Admin.prototype = Object.create(User.prototype); // 创建新的对象 / 还有原来的对象呢,  这句继承代码一定要放在 new Admin()实例化之前
+  // 如果Admin有一个后台角色的方法
+  Admin.prototype.role = function() {
+    console.log('超级管理权限  被别人用了吗?');
+  }
+
+  // a.name();
+  // a.role()
+
+
+  
+  // let a = new Admin();
+  // a.name();
+  // a.role();
+
+
+
+
+
+
+  </script>
+</body>
+</html>

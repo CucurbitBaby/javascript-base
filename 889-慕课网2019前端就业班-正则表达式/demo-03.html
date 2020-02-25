@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>转驼峰</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+
+// 转驼峰
+// css: background-color: red;
+// js : backgroundColor = red;
+// jq : $(elem).css('background-color', 'red');  jquery最终也转成了js的方式。
+
+
+// var str = 'background-color';
+// // 首先找到连字符-, 和后面的那个字母(大写也可以啦); 怎么拿到-x 的x ? 分组;
+// var pattern = /-([a-z])/gi;
+// // replace后面可以是一个字符串/函数
+// // 第一个参数就是忽略掉括号匹配到的所有的内容,  -c
+// // 有一个()多一个参数$1                        c
+// console.log(
+//   str.replace(pattern, function(all, $1) {
+//     return $1.toUpperCase();                // 注意这里的替换函数或者String只是替换匹配的内容
+//   })
+// )
+
+
+// 封装
+var str = 'background-color'
+
+function toCamelCase(str,) {
+  return str.replace(/-([a-z])/gi, function(all, $1) {
+    return $1.toUpperCase();
+  })
+}
+
+console.log(toCamelCase(str))
+
+</script>
+</body>
+</html>

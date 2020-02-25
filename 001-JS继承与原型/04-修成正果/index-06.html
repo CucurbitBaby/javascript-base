@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples Mixin的内部继承与super关键字</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+//*
+
+
+
+
+  // php->trait; JS mixin混合功能
+
+  // sub: 子类, sup: 父类
+  function extend(sub, sup) {
+    sub.prototype = Object.create(sup.prototype);
+    sub.prototype.constructor = Admin;
+    Object.defineProperty(sub.prototype, "constructor", {
+      value: sub,
+      enumerable: false
+    });
+  }
+
+  // function Address(name, age) {};
+  // Address.prototype.getAddress = function() {
+  //   console.log('获取收获地址');
+  // }
+  // extend(Credit, Address);
+
+    const Address = {
+      getAddress() {
+        console.log('获取收获地址');
+      }
+    }
+
+
+  // function Credit(name, age) {};
+  // Credit.prototype.total = function() {
+  //   console.log('积分统计');
+  // }
+  // extend(Request, Credit);
+
+
+
+
+  // function Request(name, age) {};
+  // Request.prototype.ajax = function() {
+  //   console.log('请求数据');
+  // }
+  // extend(User, Request);
+
+    const Request = {
+      ajax () {
+        // console.log('请求数据');
+        return '请求数据';
+      }    
+    }
+
+
+    const Credit = {
+      __proto__: Request,
+      total() {
+        // super -> this.__proto__
+        // console.log(this.__proto__.ajax() + ' 积分统计');
+        console.log(super.ajax() + ' 积分统计');
+
+      }
+    }
+
+
+  function User(name, age) {
+    this.name = name;
+    this.age = age;
+  };
+  User.prototype.show = function() {
+    console.log(this.name, this.age);
+  }
+
+
+  function Admin(name, age) {
+
+    User.call(this, name, age)
+  };
+
+  extend(Admin, User);
+
+  // Admin 继承完 User之后  
+  // Admin.prototype.ajax = Request.ajax;
+  // Admin.prototype.total = Credit.total;
+  // ..
+
+
+  // JS 提供了属性合并
+  Admin.prototype = Object.assign(Admin.prototype, Request, Credit);
+
+
+  let admin = new Admin('向军', 18);
+  admin.show();
+  admin.ajax();
+  admin.total();
+
+
+  function Member(name, age) {
+
+    User.call(this, name, age)
+  };
+
+  extend(Member, User)
+  // JS 提供了属性合并
+  // Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
+  Member.prototype = Object.assign(Admin.prototype, Address);
+
+  let lisi = new Member('李四', 19);
+
+  lisi.show();
+  lisi.ajax();
+  // lisi.total();
+  // total和ajax本身没有什么关系,  为了让admin使用total ajax让他们(Request, Credit强制继承了一波)
+
+  // 再加一个Member() 需要User的某些东西 要强制继承了很多Request, Credit
+  
+  lisi.getAddress();
+
+
+  // Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
+  // IE 10不支持
+
+//*/
+     
+  </script>
+</body>
+</html>

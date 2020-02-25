@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 观察者模式</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+<script type="text/javascript">
+
+// merchants(商人, 批发商, 某活动的爱好者, 热衷于..的人)  
+var merchants = {};
+
+// 定义预定列表
+merchants.orderList = {};
+
+// 将增加订阅者(客户) 添加到 客户列表中
+merchants.listen = function(id, info) {
+  // console.log('info => ', info)      // 函数
+  if(!this.orderList[id]) {
+    this.orderList[id] = [];
+  }
+  this.orderList[id].push(info);
+
+  console.log('预定成功','\r\n\r\n');
+};
+
+
+// 取消订阅
+merchants.remove = function(id, fn) {
+  
+  var infos = this.orderList[id];     // Array 或者是 ..
+
+  if(!infos) return false;            // 取反之后, 直接return 失败;   Boolean([]) === true
+
+  if(!fn) {                           // 无fn参数, 但是通过了上面的阻击判断了
+    infos && (infos.length = 0);      // 清空数组
+  }else {                             // 有fn参数, 至此 id infos fn 都有了
+    for (var i = 0,len = infos.length; i < length; i++) {
+      if(infos[i] === fn) {           // 遍历 找到了相同的, 
+        // splice(start[,deleteCount[,item1[,item2]]]) 删除或替换现有元素; 或原地添加新的元素来修改原数组, 并以数组返回被修改的内容
+        // item是添加的新元素, conunt指定0&-x, 无item就删除
+        infos.splice(i, 1);
+      }
+    }
+  }
+};
+
+// 发送消息
+merchants.publish = function() {
+  // shift()删除第一个元素, 返回元素, 修改原数组
+  var id = Array.prototype.shift.call(arguments);
+  var infos = this.orderList[id];                 // 拿到key(商品ID?)对应的数组(买家?)
+
+  // 判断是否有预定消息
+  if(!infos || infos.length === 0){
+    console.log('您没有预定信息');
+  }
+
+  // 如果有预定信息,   则循环打印
+  for(var i = 0,info; info = infos[i++];) {
+    console.log('尊敬的客户: ');
+    info.apply(this, arguments);
+    console.log('已经到货了', '\r\n\r\n');
+  }
+};
+
+// 定义一个订阅者 customerA, 并 指定预定信息
+var customerA = function() {
+  console.log('huaewi 黑色至尊版 一台');
+}
+
+
+var customerB = function() {
+  console.log('xiaomi 陶瓷收藏版 一台');
+}
+
+
+// 定义一个订阅者 customerC, 并 指定预定信息
+var customerC = function() {
+  console.log('huaewi 黑色至尊版 一台,  但是请注意我们不一样不一样不一样, 手机号码是一样的, 但是各自执行各自的回调！');
+}
+
+
+// customerA 预定手机, 并留下电话
+merchants.listen("13576413915", customerA);     // 预定成功
+merchants.listen("18574503525", customerB);     // 预定成功
+merchants.listen("13576413915", customerC);     // 预定成功
+
+
+// merchants.publish("18574503525")
+// merchants.publish("185XXXXXX")
+
+
+console.log("————————————————————————————————————————", "\r\n\r\n");
+
+merchants.remove("13576413915", customerA);
+merchants.publish("13576413915");
+
+
+// 参考: https://segmentfault.com/a/1190000013009772
+
+
+// model.指定属性 添加Object.defineP..  触发订阅model.指定属性 的view们的 xxx函数?
+// ajax请求数据成功, 设置model.指定属性, 如果没成功, views 各自啥也不干(当然可以手动执行了)
+// 问题是: 用户, 开发者, 修改了之后又会自动触发 订阅者的xxx函数了, 
+// 
+// 当然views各自的xxx函数 可以设置 自己的数据, 甚至可以深拷贝给自己的用, 
+// 但是如果只是为了ajax, 自动初始化一波, 用这个意义不大啊, 
+
+// 关键词 数据 bus 自动 组件? 对比?
+// 虚拟DOM?
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples Vue源码解析-01</title>
+</head>
+
+<body>
+  
+  <div id="app">
+    <h2>{{person.name}} -- {{person.age}}</h2>
+    <h3>{{person.fav}}</h2>
+    <ul>
+      <!-- 循环遍历为实现 -->
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+    <div>{{msg}}</div>
+    <div v-text='msg'></div>
+    <div v-text='person.name'></div>
+    <div v-html='htmlStr'></div>
+
+
+    <input type="text" v-model="msg">
+    <br />
+    <button v-on:click="handlerClick">按钮v-on:click</button>
+    <button @click="handlerClick">按钮@</button>
+    <div>{{test}}</div>
+    <div>{{test}}</div>
+    <!-- 事件 稍后-->
+  </div>
+
+<!-- <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script> -->
+<script src="/js/Observer.js"></script>
+
+<script src="/js/MVue.js"></script>
+
+<script>
+// 参考： https://www.bilibili.com/video/av80611222?from=search&seid=15437722857584122974
+
+/**
+ *  1. 实现一个指令解析起Compile
+ *  2. 实现一个数据监听器Observer
+ *  3. 实现一个watcher去更新视图
+ *  4. 实现一个proxy代理 vm.$data.mag ===  vm.msg
+ *  
+ *  注意面试话术
+ */
+
+// 1. 实现一个指令解析起Compile
+// 根据指令模板对el根节点扫描解析
+
+// let vm = new Vue({
+let vm = new MVue({
+  el: "#app",
+  data: {
+    person: {
+      name: "小马哥哥哥哥哥哥",
+      age: 18,
+      fav: "小姐姐"
+    },
+    msg: "学习mvvm实现原理",
+    htmlStr: "<div>htmlStr的数据</div>",
+    test: "test" 
+  },
+  methods: {
+    handlerClick() {
+      console.log(this);
+      // this.$data.person.name = "事件  MVVM"
+      // 代理
+      this.person.name = "事件  MVVM"
+
+    }
+  }
+})
+
+
+
+
+
+/**
+ * 面试题
+ *    阐述一下你所理解的MVVM响应式原理
+ *    1.1 vue 采用数据劫持 配合 发布订阅者模式的方式来完成的
+ *    1.2 通过Object.defineProperty()来劫持各个属性的setter和getter, 
+ *    1.3 在数据变动时发布消息 给依赖收集器 去通知观察者的callback, 去更新视图
+ *    
+ *    MVMM(vue)作为绑定的入口, 整合了Observer类, Compile类, Watcher类三者
+ *    通过Observer类监听model数据变化, 
+ *    通过Compile类解析编译模板指令
+ *    最终利用Watcher类来搭起了Observer类, Compile类的之间的通信桥梁, 
+ *    达到数据变化影响视图更新, 视图交互变化影响数据更新, 双向绑定效果
+ */
+
+</script>
+</body>
+</html>

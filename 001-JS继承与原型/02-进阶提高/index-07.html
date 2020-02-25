@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples DOM节点借用Array原型方法</title>
+</head>
+
+<body>
+
+  <button message="前端人" class="red">前端人</button>
+  <button message="frontcms" >frontcms</button>
+  
+  <script type="text/javascript">
+  
+/*
+
+  // 只想要有class属性的按钮
+  let arr = [1,2,3,34,35];
+
+  let res = arr.filter(item => {
+    return item > 33;
+  })
+
+
+  console.log(res);     // (2) [34, 35] 
+
+*/
+
+  // console.log(Array);   // ƒ Array() { [native code] }
+  // console.dir(Array);
+  // console.log(Array.prototype);   // 找打filter()
+
+/*
+
+  let btns = document.querySelectorAll("button");
+
+  btns = Array.prototype.filter.call(btns, item => {
+    return item.hasAttribute('class');
+  })
+
+  console.log(btns[0]);
+
+//*/
+
+
+  let btns = document.querySelectorAll("button");
+
+  // btns = Array.prototype.filter.apply(btns, item => {
+  //   return item.hasAttribute('class');
+  // })
+
+  // console.log(btns[0]);
+
+
+function jieyong(data) {
+  // console.log(data);
+  // var btns = Array.prototype.filter.call(data, item => {
+  var btns = [].filter.call(data, item => {
+    return item.hasAttribute('class');
+  })
+
+    console.log(btns);
+  }
+
+
+  jieyong.call(null, btns)
+  jieyong.apply(null, [btns]);       // 在调用处使用[]封装 call/apply 在内部判断arguemnts更容易
+
+  </script>
+</body>
+
+</html>

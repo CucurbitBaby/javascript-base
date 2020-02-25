@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 自定义对象的原型设置</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  
+  let hd = { name: "hd"};      // new Object() 语法糖
+  let parent = { name: "parent", show() { console.log('parent的show方法') }};
+
+  console.log(hd.__proto__ === Object.prototype); // true
+  // 想让hd继承perent, 把hd的父级改成perent
+
+  // Object.setPrototypeOf(obj, prototype)    // 兼容性很差
+  // Object.setPrototypeOf() 方法设置一个指定的对象的原型 ( 即, 内部[[Prototype]]属性）到另一个对象或  null。 如果你关心性能，你应该避免设置一个对象的 [[Prototype]]。相反，你应该使用 Object.create()来创建带有你想要的[[Prototype]]的新对象。
+
+  // 1.设置原型
+  Object.setPrototypeOf(hd, parent);
+  console.log(hd);  
+  // {name: "hd"}
+  //   name: "hd"
+  //   __proto__: 
+  //     name: "parent"
+  //     __proto__: Object
+  console.log(hd.name);   // hd
+  hd.show();    // parent的show方法
+  </script>
+</body>
+
+</html>

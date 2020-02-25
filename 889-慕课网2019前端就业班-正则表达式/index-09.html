@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>String对象中与正则表达式相关的方法</title>
+</head>
+<body>
+
+<script>
+  // \
+  // var str = '// 我是注释';
+  // var pattern = /\/\//;
+  // console.log(pattern.exec(str));     // ["//", index: 0, input: "// 我是注释", groups: undefined]
+
+  // str.search
+  // var str = 'html js js';
+  // console.log(str.search('js'));         // 5 位置  找到了, 找不到-1  也可以是字符串(隐式转换成正则)
+
+  // var str = 'html js js';
+  // var pattern = /js/g;
+  // console.log(str.search(pattern));         // 还是5, 有没有全局匹配都是无所谓的
+
+
+  // str.match 
+  // 没有分组
+  // var str = 'js js js';
+  // var pattern = /js/;                         // 和exec还是一样的
+  // console.log(str.match(pattern));            // ["js", index: 0, input: "js js js", groups: undefined]
+
+
+  // // 分组没有开启全局
+  // var str = 'js js js';
+  // var pattern = /(j)s/;                       // 和exec还是一样的    和exec还是一样的
+  // console.log(str.match(pattern));            //  ["js", "j", index: 0, input: "js js js", groups: undefined]
+
+  // // 分组开启全局
+  // var str = 'js js js';
+  // var pattern = /(j)s/g;                         // ["js", "js", "js"] 没有了分组的项了
+  // console.log(str.match(pattern));
+
+  // match VS exec
+  // match只有在非全局情况下,才返回分组中的内容, 全局匹配只能返回 所有匹配到匹配字符 一把梭哈数组
+  // exec无论是否全局都会返回分组中的内容, 且只返回当前匹配到的一个内容, 而不是全部返回匹配到的内容
+  // 但是可以继续接着匹配, 直到找不到为止的
+
+  // // m 模式  
+  // var str = '1.js\n2.js\n3.js';
+  // var pattern = /js/m;                // 虽然是多行的, 但没有开启全局, 找到了就回家
+  // console.log(str);
+  // console.log(str.match(pattern));    // ["js", index: 2, input: "1.js↵2.js↵3.js", groups: undefined]
+
+  // // m和g一起使用才有意义
+  // var str = '1.js\n2.js\n3.js';
+  // var pattern = /js/mg;               // 此时m 加不加都没有关系
+  // console.log(str);    
+  // console.log(str.match(pattern));    // ["js", "js", "js"]
+
+  // // m和g一起使用才有意义 用match要指定位置才有意义
+  // var str = '1.js\n2.js\n3.js';
+  // // var pattern = /js$/g;                  // ["js"]  虽然是全局的, 但也只能找到最后一个
+  // var pattern = /js$/mg;                    // ["js", "js", "js"]  加m就不一样了, 每一个都是一行了
+  // console.log(str);
+  // console.log(str.match(pattern));
+
+  // 首匹配和尾匹配是一样的
+  // var str = 'js1\njs2\njs3';
+  // var pattern = /^js/mg;
+  // console.log(str);
+  // console.log(str.match(pattern));            // ["js", "js", "js"]
+
+  // var str = 'html,css,js';
+  // console.log(str.split(','));
+
+  // var str = 'html,css,js';
+  // var pattern = /,/g;
+  // console.log(str.split(pattern));
+
+  // var str = 'html ,   css  ,   js';
+  // var pattern = /\s*,\s*/;
+  // console.log(str.split(pattern));
+
+  // var str = 'I love js js';
+  // console.log(str.replace('js', 'html'));     // I love html js
+
+  // var str = 'I love js js';
+  // var pattern = /js/g;
+  // console.log(str.replace(pattern, 'html'));
+
+  // var str = '1111-11-11';
+  // var pattern = /-/g;
+  // console.log(str.replace(pattern, '.'));
+
+  // // 引用分组
+  // var str = 'I love js';
+  // var pattern = /(js)/;
+  // document.write(str.replace(pattern, '<strong style="color: red;">$1</strong>'));  // 页面显示 I love js
+
+  // var str = '中国军队和阿扁一起办证';
+  // var pattern = /国军|阿扁|办证/g;
+  // console.log(str.replace(pattern, '*'));     // 中*队和*一起*     很明显少*了
+
+  // var str = '中国军队和阿扁一起办证';              // 中**队和**一起**
+  // var pattern = /国军|阿扁|办证/g;
+  // console.log(
+  //   str.replace(pattern, function ($0) {
+  //    // console.log($0);
+  //    var result = '';
+  //    for (var i = 0; i < $0.length; i++) {       // String.length
+  //      result += '*';
+  //    }
+
+  //    return result;
+  //   })
+
+  // );
+
+  // var str = '中国军队和阿扁一起办证';              // 中**队和**一起**
+  // var pattern = /(国)军|阿扁|办证/g;
+  // console.log(
+  //   str.replace(pattern, function ($0, $1) {
+  //    console.log($0);   // 国军 阿扁        办证
+  //    console.log($1);   // 国   undefined   undefined
+  //    var result = '';
+  //    for (var i = 0; i < $0.length; i++) {       // String.length
+  //      result += '*';
+  //    }
+
+  //    return result;
+  //   })
+
+  // );
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

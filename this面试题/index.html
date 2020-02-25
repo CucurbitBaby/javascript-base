@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples this面试题</title>
+</head>
+<body>
+  <script type="text/javascript">
+    
+    // 面试题01    
+    // var x = 1, y = z = 0;
+
+    // function add(n) {
+    //   return n = n + 1;
+    // }
+
+    // y = add(x);
+
+    // function add(n) {
+    //   return n = n + 3;
+    // }
+
+    // z = add(x);
+
+    // console.log(x);   // 1
+    // console.log(z);   // 4
+    // console.log(y);   // 4
+
+    // A  不输出
+    // function foo(x) {
+    //   console.log(arguments)
+    //   return x;
+    // }(1,2,3)
+
+
+    // 这种结果是不输出的
+    // function foo(x) {
+    //   console.log(arguments)
+    //   return x;
+    // }(1,2,3)
+
+
+    var name = "222";
+    var a = {
+      name: "111",
+      say: function() {
+        console.log(this.name);
+      }
+    }
+
+    var fun = a.say;    // a.say是个函数体, 函数对象引用地址给fun, 然后再全局调用fun()
+
+    fun();      // 222 this指向window
+
+    a.say();    // 111
+
+    var b = {
+      name: "333",
+      say: function(fun) {
+        // 这里面的this确实指向的是b
+        // 但是也没写this.fun执行啊
+        // fun()执行谁也没调用它啊, 没有调用者, fun执行的时候走的是预编译环节, this ==> window
+        fun();  // 111   
+      }
+    }
+
+    b.say(a.say);     // 222
+    b.say = a.say;    
+    b.say();          // 333
+
+
+
+
+
+    // 未完待续
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 使用父类的构造函数初始化属性</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+  function User(name, age) {
+    this.name = name;
+    this.age = age;
+    this.publicProperty = 'publicProperty'
+  };
+  User.prototype.show = function() {
+    console.log(this.name, this.age);
+  }
+  User.prototype.publicOutput = function() {
+    console.log(this.publicProperty);
+  }
+
+  // User.prototype.publicProperty = 'publicProperty'
+
+  function Admin(name, age) {
+    // User.call(this, name, age);
+    // User.call(this, ...arguments);
+    // User.call(this, arguments);      // 不行的
+
+    // 如果参数比较多的话
+
+    User.apply(this, arguments)
+    // this.publicProperty = "子类实例自己的publicProperty";
+  };
+  Admin.prototype = Object.create(User.prototype);
+  Admin.prototype.constructor = Admin;
+  
+  let xj = new Admin('向军', 18);
+  xj.show();      // 向军 18
+  // xj.publicOutput();
+
+
+
+  // function Member(name, age) {
+    
+  // };
+  // Member.prototype = Object.create(User.prototype);
+
+  </script>
+</body>
+</html>

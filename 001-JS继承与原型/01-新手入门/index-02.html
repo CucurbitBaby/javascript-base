@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 没有原型的对象也是存在的</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+    let hd = { name: "后盾"};
+    console.log(hd);    // 有原型 __proto__
+    // hasOwnProperty() 方法会返回一个布尔值，指示对象自身属性中是否具有指定的属性（也就是，是否有指定的键）。
+    console.log(hd.hasOwnProperty("name"));   // true
+
+    // Object.create()方法创建一个新对象，使用现有的对象来提供新创建的对象的__proto__
+    // Object.create(proto[, propertiesObject])
+    // 完全数据字典对象 -> 使用比较少
+    let front = Object.create(null, {
+      name: {
+        value: '前端人'
+      }
+    });
+
+    console.log(front);   // 没有__proto__属性
+    console.log(front.hasOwnProperty("name"));   // Uncaught TypeError: front.hasOwnProperty is not a function   hasOwnProperty()方法本身就是继承来的
+
+
+  </script>
+</body>
+</html>

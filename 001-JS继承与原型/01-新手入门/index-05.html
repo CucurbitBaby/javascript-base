@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 原型关系详解与属性继承实例</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  
+  // String Number Array.. 内建对象(系统对象继承&重写了Object对象)
+  let hd = new Object();
+  hd.name = "后盾人";
+
+  // console.dir(Object);
+  Object.prototype.show = function() {
+    console.log("front.com");
+  }
+
+  hd.show();  // front.com
+
+  function User() {}
+  console.dir(User);      // User().prototype.__proto__ 可以看到 show()方法
+  // 也就是说User.prototype === Object.prototype
+
+  // console.log(User.prototype.__proto__ === Object.prototype)
+
+  console.log(User.prototype === User.__proto__);   // false 注意了 User作为对象使用的话
+  // User.__proto__ 指向了它的构造函数的原型对象 
+  console.log(User.prototype);                   // {constructor: ƒ User(), __proto__: Object}
+  console.log(User.prototype.__proto__ === User.__proto__.__proto__)  // true
+
+  console.log(Object.prototype.__proto__);    // null
+
+  // 看自己原型图吧, 没一个老师真的理解
+
+  </script>
+</body>
+
+</html>

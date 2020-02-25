@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples this和原型没有关系的</title>
+</head>
+
+<body>
+
+  <script type="text/javascript">
+    
+    
+/*
+
+    // this始终指向调用者, 调用属性/方法的对象
+
+    let hd = { 
+      name: "前端人", 
+      show() {
+        console.log(this.name);
+      }
+    }
+
+    Object.setPrototypeOf(hd, {});    // 改变原型, show中的this始终指向调用者, 调用属性/方法的对象
+
+    console.log(hd.show());
+
+*/
+
+
+    let hd = { 
+      name: "前端人", 
+
+    }
+
+    let User = {
+      name: "向军",
+      show() {
+        console.log(this.name);
+      }
+    }
+
+    Object.setPrototypeOf(hd, User);   // 这里注意, 哪怕是show()已经在User里面了, 调用者还是hd
+
+    console.log(hd.show());
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 不要滥用原型</title>
+</head>
+
+<body>
+
+  <button onclick="this.hide()">前端人</button>
+
+  <script type="text/javascript">
+    
+  Object.prototype.hide = function() {
+    // 这样超级不好不好不好  太基类了, 这是系统的原型啊
+    this.style.display = "none";
+  }
+
+  </script>
+</body>
+
+</html>

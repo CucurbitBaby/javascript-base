@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>email邮箱匹配</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+// 邮箱
+// alex@yahoo.com.cn  不一定是.com就结束了, 可能继续.很多后缀
+// a_lex@yahoo.com.cn  _
+// alex.com@yahoo.com.cn  前面邮箱名可能是个域名   alex.aaa.com@yahoo.com.cn
+// 
+// 复杂的正则先分组
+// /()*/
+// /()*()@/
+// /()*()@()+/
+// /()*()@()+()/
+// /()*()@()+()/i
+
+// alex.aaa.com@yahoo.com.cn
+
+// /(\w+\.)*/           alex.aaa.
+// /(\w+\.)*(\w+)@/       alex.aaa.com
+// /(\w+\.)*(\w+)@()+/      alex.aaa.com@
+// /(\w+\.)*(\w+)@(\w+\.)+([a-z]*)/  alex.aaa.com@yahoo.com
+// /(\w+\.)*(\w+)@(\w+\.)+([a-z]*)/i  alex.aaa.com@yahoo.com
+
+// var email = 'alex.aaa.com@yahoo.com.cn';
+// var pattern = /(\w+\.)*(\w+)@(\w+\.)+([a-z]*)/ig;
+// console.log(
+//   email.match(pattern)
+// )
+
+
+// 不用分组引用
+// 干掉括号,
+// 设置一下非捕获性
+// /(\w+\.)*(\w+)@(\w+\.)+([a-z]*)/ig;
+// /(?:\w+\.)*\w+@(?:\w+\.)+[a-z]*/ig;  
+// var email = 'alex.aaa.com@yahoo.com.cn';
+// var pattern = /(?:\w+\.)*\w+@(?:\w+\.)+[a-z]*/ig
+// console.log(
+//   email.match(pattern)
+// )
+
+// 或一种思考方式
+// alex.aaa.com@yahoo.com 
+// 分类
+// /()()@()()\.()/
+// /(a-z0-9)(_.-)*@(字母)(_.-)*\.(字母)*/i
+
+// /([a-z0-9]+)([._-]?[a-z0-9]+)*@([a-z0-9]+)([._-]?[a-z0-9]+)*\.([a-z]{2,4})/i
+
+
+
+// var email = 'alex.aaa.com@yahoo.com.cn';
+// var pattern = /([a-z0-9]+)([._-]?[a-z0-9]+)*@([a-z0-9]+)([._-]?[a-z0-9]+)*\.([a-z]{2,4})/ig
+// console.log(
+//   email.match(pattern)
+// )
+
+// 如果需要验证邮箱呢, 两端加上首位匹配
+// var email = 'alex.aaa.com@yahoo.com.cn';
+// var pattern = /^([a-z0-9]+)([._-]?[a-z0-9]+)*@([a-z0-9]+)([._-]?[a-z0-9]+)*\.([a-z]{2,4})$/ig
+// console.log(
+//   email.match(pattern)
+// )
+// 简化 过河拆桥
+// 不用分组引用
+// 干掉括号,
+// 设置一下非捕获性
+var email = 'alex.aaa.com@yahoo.com.cn';
+var pattern = /^[a-z0-9]+(?:[._-]?[a-z0-9]+)*@[a-z0-9]+(?:[._-]?[a-z0-9]+)*\.[a-z]{2,4}$/ig
+console.log(
+  email.match(pattern)
+)
+
+
+</script>
+</body>
+</html>

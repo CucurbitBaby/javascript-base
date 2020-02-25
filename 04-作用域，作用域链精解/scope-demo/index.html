@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 作用域</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  
+/*
+  function a() {
+
+    function b() {
+      var b = 234;
+    }    
+
+    var a = 123;
+
+    b();
+
+  }
+
+  var glob = 100;
+
+    // a函数被定义的时候[[scope]]就存了数据了
+    // a.[[scope]]:scope => chain[
+    //                           0: Global Object => {
+    //                               this: windows,
+    //                               window: (object),
+    //                               document: (object),
+    //                               a: (function),
+    //                               glob: 100
+    //                           }
+    //                         ]
+
+
+  a();
+
+    // a执行的时候, 产生一个执行期AO, AO放在哪儿呢？ 
+    // 放在作用域链的顶端
+    // a defined a.[[scope]] --> 0: GO {}
+    // a doing   a.[[scope]] --> 0: AO {}
+    //                           1: GO {}
+    // unshift() -> 数组开头增加元素                          
+    // 作用域链数据结构:  
+    // a.[[scope]]:scope => chain[
+    //                           0: Activation Object => {
+    //                               this: windows,
+    //                               arguments: [],
+    //                               document: (object),
+    //                               a: 123,
+    //                               glob: (function)
+    //                           },
+    //                           1: Global Object => {
+    //                               this: windows,
+    //                               window: (object),
+    //                               document: (object),
+    //                               a: (function),
+    //                               glob: 100
+    //                           }
+    //                         ]
+
+//*/
+
+/*
+  // 1. b.[[scope]]中的0, 1, 2中的1 不是刚才a执行生成的AO么, 他们两个是不是同一个啊?
+  function a() {
+
+    function b() {
+      var bb = 234;
+      // 在b中访问a
+      aa = 0;
+    }    
+
+    var aa = 123;
+
+    b();
+    // b的执行把a变成0了
+    console.log(aa);
+    // if => 123  a的AO没有被b的执行改变   不是同一个 ❌
+    // else => 0    是同一个 ✔
+  }
+
+  var glob = 100;
+
+  a();
+
+
+
+  // 2. 生成这一系列过程什么时候是个终点, 会不会消失, 怎么消失(一个函数执行完毕会销毁它的执行上下文)
+  // b() 执行完了销毁它的执行上下文, 回归到它被定义时的状态, 等待它下次被执行 ❌自己的AO 去掉 引用
+  // JS有意思的就是函数执行完可以没有return (undefined), 所以 a()执行完毕   ❌自己的AO 去掉 引用  回归到它被定义时的状态, 等待它下次被执行
+  // a() ❌自己的AO的时候 同时去掉了b函数, b函数不用等待下次被执行了, b函数直接被抛弃了, 只有下次a()执行才会产生独一无二的执行上下文, 才又产生了一次b函数的定义
+//*/
+
+
+//*
+  function a() {
+
+    function b () {
+
+      function c() {
+
+      }
+      c();
+    
+    }
+    b();
+
+  }
+  a();
+
+  // a defined a.[[scope]] --> 0 : GO
+  // a doing   a.[[scope]] --> 0 : AO
+  //                           1 : GO
+  //                           
+  // a函数执行产生一个b函数定义                          
+  // b defined b.[[scope]] --> 0 : aAO
+  //                           1 : GO
+  //                           
+  // b doing   b.[[scope]] --> 0 : bAO
+  //                           1 : aAO
+  //                           2 : GO
+  // b函数执行产生一个c函数定义                          
+  // c defined c.[[scope]] --> 0 : bAO
+  //                           1 : aAO
+  //                           2 : GO
+  //                           
+  // c doing   c.[[scope]] --> 0 : cAO
+  //                           1 : bAO
+  //                           2 : aAO
+  //                           3 : GO
+//*/
+
+  </script>
+</body>
+
+</html>
+<script type="text/javascript">
+/*
+
+  function test() { // 函数类对象
+
+  }
+  console.log(test.name);   // test 
+  test.[[scope]]            // 函数对象我们无法访问的隐式属性(系统用的): 存的由这个函数产生而产生的作用域
+  [[scope]] 存储了运行期上下文的集合
+  函数每次执行时对应的执行上下文都是唯一的, 调用多次产生多个, 函数执行完毕,它所产生的执行上下文销毁。
+
+
+
+  上下文(context)是指this在同一作用域内的值。我们也可以使用call()、apply()、bind()、箭头函数等改变上下文。
+
+  一个函数里面有一个[[scope]]属性存的是作用域
+  一个函数执行的时候还产生了一个唯一一个AO对象
+  那[[scope]]为什么存储了很多个执行上下文的集合呢？
+  因为[[scope]]存储的是作用域链， 作用域链存储的才是执行上下文的集合
+
+  总结
+  执行期上下文(3-4步走) ≈ 我们理解的函数作用域, 全局作用域和函数作用域, 内层可以访问外层,反之不可以
+    硬生生的解释:是JS引擎解针对函数自身{}(综括号内的)和全局(window)的变量可访问区域做的区分, 实际情况访问和嵌套函数访问会查找作用域链
+
+  作用域链: [[scope]]中所存储的是执行期上下文对象的集合,呈链式链接,这种呈链式链接叫做作用域链。
+
+  作用域和执行上下文的关系
+    因为在一个函数被执行时，创建的执行上下文对象除了保存了些代码执行的信息，还会把当前的作用域保存在执行上下文中。所以它们的关系只是存储关系。
+
+  查找变量: 从作用域链的顶端依次向下查找
+
+  a..
+  a函数执行时还产生了一个b函数定义
+  function b(){} 刚出生(定义)的时候存储的b()所在环境的执行上下文f a(){}的[[scope]],放到自己的最顶端0位置, 然后执行时 把自己的AO unshift() -> 数组开头增加元素    
+  
+  // 参考: https://www.jianshu.com/p/dffdbfdfd09b
+//*/
+</script>

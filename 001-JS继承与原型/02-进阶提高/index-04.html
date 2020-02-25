@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples in与hasOwnProperty差异 属性检测</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+        
+/*
+ 
+    let a = { url: "front.com"};
+    let b = { name: "前端人"};
+
+    // 属性在指定的对象或其原型链中，则in 运算符返回true
+    console.log('url' in a);    // true
+
+    console.log('web' in a);    // false
+
+    Object.prototype.web = "w3c.com";
+
+    console.log('web' in a);    // true
+
+//*/
+  
+    // 直接报错的哦
+    // let test = {};
+    // test.prototype.age = 18;
+
+
+/*
+
+    let a = { url: "front.com"};
+    let b = { name: "前端人"};
+
+
+    Object.setPrototypeOf(a, b);
+    console.log('name' in a);     // true
+
+//*/
+
+
+    let a = { url: "front.com"};
+    let b = { name: "前端人"};
+
+    Object.setPrototypeOf(a, b);
+
+    console.log(a.hasOwnProperty("url"));   // true
+    console.log(a.hasOwnProperty("name"));   // false
+
+    // 遍历当前对象
+    // for( const key in object) {
+    //    if(object.hasOwnProperty(key))    // 只会操作obj自己的属性
+    // }
+
+  </script>
+</body>
+
+</html>

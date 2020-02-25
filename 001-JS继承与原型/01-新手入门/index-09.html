@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 给我一个对象还你一个世界</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+
+/*
+ 
+  function User(name) {
+    this.name = name;
+    this.show = function() {
+      console.log('User构造函数里的show方法输出, 输出自己的name', this.name)
+    }
+  }
+
+  let hd = new User("前端人");
+
+  console.log(hd);
+
+  function createByObject(obj, ...args) {
+    const constructor = Object.getPrototypeOf(obj).constructor;
+    // console.log(constructor);    // User构造函数
+    return new constructor(...args);
+
+  }
+
+  let xj = createByObject(hd, "向军");
+
+  console.log(xj);
+  xj.show();
+
+//*/
+
+  // 你要改变一个原型的时候, 别忘了把constructor添加上
+  function User(name) {
+    this.name = name
+  }
+
+  User.prototype = {
+    constructor: User,
+    show() {
+      console.log('User构造函数里的show方法输出, 输出自己的name', this.name)
+    }
+  }
+
+  let hd = new User("前端人");
+
+  console.log(hd);
+
+  function createByObject(obj, ...args) {
+    const constructor = Object.getPrototypeOf(obj).constructor;
+    // console.log(constructor);    // User构造函数
+    return new constructor(...args);
+
+  }
+
+  let xj = createByObject(hd, "向军");
+
+  console.log(xj);
+  xj.show();
+
+  </script>
+</body>
+
+</html>

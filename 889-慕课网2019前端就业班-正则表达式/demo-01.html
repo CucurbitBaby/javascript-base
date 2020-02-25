@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>常用的正则表达式</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+  // QQ号 => 分析
+  // 1. 全是数字
+  // 2. 首位不能为0
+  // 最少是5位数
+  // 最多只有11位
+
+  // 很简单不测试了
+  // var pattern = /^[1-9]\d{4,10}$/;
+
+  // 昵称(imooc为例)
+  // 中英文 || 数字 || 下划线
+  // 2-18位, 
+
+  // 中文是一个Unicode表示的范围, 正则中的范围只能写在字符类里面了  /[\u4e00-\u9fa5]/
+  // var pattern = /^[\u4e00-\u9fa5a-zA-Z0-9_]{2,18}$/;  验证昵称首位还是都要匹配一下
+  // 小写a-z,大写A-Z, 0-9,_, 就是\w
+  // var pattern = /^[\w]{2,18}$/
+  
+
+  // 密码验证
+  // 6-16位, 
+  // 不能用空白字符 (Tab) \s   文本里面赋值一个tab过来
+  // var pattern = /^\S{6,16}$/;    
+
+  // 另一种写法,imooc的把所有允许字符都列出来了
+  // var pattern = /^[\w~!@#$%^\[\]]{6,16}$/;    
+  
+  
+
+
+
+</script>
+</body>
+</html>

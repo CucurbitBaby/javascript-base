@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 基于元素节点树的遍历</title>
+</head>
+<body>
+  
+  <div>
+    123
+    <!-- This is comment -->
+    <span></span>
+    <em></em>
+  </div>
+
+
+  <script type="text/javascript">
+  // 我就想知道div下面有多少个元素, 不要文本节点
+  var div = document.getElementsByTagName('div')[0];
+  console.log(div.parentElement);
+
+  </script>
+</body>
+</html>
+
+<script>
+/*
+  节点的四个属性:
+    nodeName:   元素的标签名
+    nodeValue:  Text节点或Comment节点的文本节点内容, 可读写
+    nodeType:   节点的类型, 只读
+    attributes: Element节点的属性集合
+  节点的一个方法: Node.hasChildNodes();      返回一个布尔值,表明当前节点是否包含有子节点.
+  节点类型:      nodeType     nodeName      nodeValue(文本和注释节点才有)
+    元素节点           -> 1   "STRONG"      
+    属性节点           -> 2   ""            
+    文本节点           -> 3   "#text"
+    注释节点           -> 8   "#comment"
+    document          -> 9    
+    DocumentFragment  -> 11
+  
+
+
+  遍历节点树:  可不是HTML节点才算节点哦!
+    parentNode      -> 父节点(最顶端的parentNode为#document)
+    childNodes      -> 子节点们
+    firstChild      -> 第一个子节点
+    lastChild       -> 最后一个子节点
+    nextSiblins     -> 后一个兄弟节点
+    previousSibling -> 前一个兄弟节点
+ 
+  基于元素节点树的遍历
+    parentElement                                   -> 返回当前元素的父元素节点(IE不兼容)
+    children                                        -> 返回当前元素的元素子节点(除了他其他的都是ie9以及ie9一下不支持的)
+    node.childElementCount === node.children.length -> 当前元素的元素子节点数量
+    firstElementChild                               -> 返回的是第一个元素节点(IE不兼容)
+    lastElementChild                                -> 返回的是最后一个元素节点(IE不兼容)
+    nextElementSibling/previousElementSibling       -> 返回的是后一个/前一个兄弟元素(IE不兼容)
+
+
+  // parentNode和parentElement功能一样，childNodes和children功能一样。
+  // 但是parentNode和childNodes是符合W3C标准的，可以说比较通用。
+  // 而另外两个只是IE支持，不是标准，Firefox就不支持
+        parentElement 获取对象层次中的父对象。 
+        parentNode    获取文档层次中的父对象。 
+        childNodes    获取作为指定对象直接后代的 HTML 元素和 TextNode 对象的集合。 
+        children      获取作为对象直接后代的 HTML 对象的集合。 
+*/
+</script>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>正则表达式中的字符类,取反, 别名, 量词简写, 贪婪模式/改非非贪婪模式, 正则的匹配原则</title>
+</head>
+<body>
+  
+
+<script>
+  // 重复/量词
+
+  // {量词}
+  // var str = '110';                
+  // var pattern = /\d{3}/;          // \d只能匹配一个呀, 难道要写\d\d\d
+  // console.log(pattern.exec(str)); // 110
+
+  // var str = '110';
+  // var pattern = /\d{1,2}/;          // 1至2个  >=1 || =<2    1,2逗号不要空格
+  // console.log(pattern.exec(str));
+  // // for (var i = 0; i < 3; i++) {  // 习惯,空格了
+  // // }
+
+  // 
+  // var pattern = /\d{1, 2}/;  // 错误的
+
+  // var str = '110';
+  // var pattern = /\d{1,}/;          // 至少1个
+  // console.log(pattern.exec(str));  // 110
+
+  // var str = '110';                // 人可以没有上限, 不能没有下限
+  // var pattern = /\d{,2}/;         // 语法错误的哦
+  // console.log(pattern.exec(str));
+
+  // var str = '110';
+  // var pattern = /\d?/;             // ? 量词简写 {0,1}
+  // console.log(pattern.exec(str));
+
+  // var str = '110';
+  // var pattern = /\d+/; //          // + 量词简写 {1,}
+  // console.log(pattern.exec(str));
+
+  // var str = '110';
+  // var pattern = /\d*/; // {0,}     // * 量词简写{0,}   0次或者更多
+  // console.log(pattern.exec(str));
+
+  // var str = '肯德基豪华午餐：￥15.5！';
+  // // var pattern = /\d+\.?\d*/;
+  // var pattern = /\d{1,}\.{0,1}\d{0,}/;     // 用量词再来一次
+  // console.log(pattern.exec(str));
+
+  // 分析: 前面是至少1个数字, 有可能是更多个数字
+  // /\d+/
+  // 连着.  .可有可无, 有最多只能一个
+  // /\d+\.?/
+  // .后面的数字 可有可无, 可以有多位
+  // /\d+\.?\d*/
+
+
+  // var str = 'aaab';
+  // // var pattern = /a+/;      // 1次或者更多, 到底是a aa aaa呢？  aaa 正则默认是贪婪匹配, 贪婪只和量词有关
+  // var pattern = /a+?/;     // 量词后面加1个?  将贪婪匹配改成非贪婪匹配  也可以是?(量词)?(转非贪婪) 也可以/a{0,1}?/
+  // console.log(pattern.exec(str));
+
+  // var str = 'aaab';
+  // var pattern = /a+b/;            // aaab
+  // console.log(pattern.exec(str));
+
+  // var str = 'aaab';
+  // var pattern = /a+?b/;             // 匹配不到？   no no no  是 aaab
+  // console.log(pattern.exec(str));   // 正则是从左开始匹配的, 只要一匹配上呢, 会寻找第一个可能匹配的, 而不是最合适的匹配的  
+  //                                   // 条件允许的情况下, 正则才会尽可能少的匹配
+
+  // var str = '<td><p>a</p></td><td><p>b</p></td>';
+  // var pattern = /<td>.*<\/td>/;        // 默认是贪婪的, 直接找到最后一个</td>
+  // console.log(pattern.exec(str));
+
+  // var str = '<td><p>a</p></td><td><p>b</p></td>';
+  // var pattern = /<td>.*?<\/td>/;          // 改成非贪婪
+  // console.log(pattern.exec(str));
+  
+  var str = "{{zwx876495}}"
+  var pattern = /\{{2}\w+\}{2}/;  
+  console.log(pattern.exec(str));
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples prototype扩展方法 </title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  function say() {
+    console.log('say中的this=>', this);
+  }
+
+  function A() {
+    this.name = "nameA"
+  }
+
+  var a = new A();
+
+  A.prototype['say'] = function() {
+    return say.call(this);      // 不会立马执行 调用了才执行
+    // return say();            // window
+  }
+
+  a.say();
+  </script>
+</body>
+
+</html>

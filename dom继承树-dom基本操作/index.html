@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples dom继承树, dom基本操作</title>
+</head>
+<body>
+
+  <div>
+    <span></span>
+  </div>
+    <span class="test"></span>
+
+  <script type="text/javascript">
+    // console.log(document);    // #documents
+    // console.log(Document);    // Document() { [native code] }  构造函数(特殊系统专用, 我们不能new)
+    Document.prototype.age = "18岁";
+    console.log(document.age);
+    // document --> HTMLDocument
+    // HTMLDocument.prototype = {
+    //  __proto__: Docuemnt.prototype
+    // }
+
+    // document --> HTMLDocument.prototype --> Document.prototype
+
+    // Document下:除了HTMLDocument,应该还有一个分支: XMLDocument
+    // 所以Document的属性和方法XmlDocument也能继承
+
+    // Node() 构造函数
+
+
+    HTMLBodyElement.prototype.abc = "demo";
+    var body = document.getElementsByTagName('body')[0];
+    console.log(body.abc);
+
+    console.log(document.__proto__)
+    console.log(document.__proto__.__proto__)
+    console.log(document.__proto__.__proto__.__proto__)
+    console.log(document.__proto__.__proto__.__proto__.__proto__)
+    console.log(document.__proto__.__proto__.__proto__.__proto__.__proto__);  // Object.prototype --> DOM元素.原型的终端, Dom元素也可以使用对象(Object)的一些属性和方法
+    // console.log(document.body.toString());    // [object HTMLBodyElement]
+
+    // var div = document.getElementsByTagName('div')[0];
+    // var span = div.getElementsByTagName('span');
+    // console.log(span);    // 选择div里面所有的span    很常用
+
+
+    // var div = document.getElementsByTagName('*')[0];
+    // console.log(div);   // 所有标签
+  </script>
+</body>
+</html>

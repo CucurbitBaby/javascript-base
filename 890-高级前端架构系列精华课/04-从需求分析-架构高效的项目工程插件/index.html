@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css" rel="stylesheet">
+  <style>
+    .box {
+      width: 80%;
+      margin: 50px auto 0 auto;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+    .ipt-error-img {
+      padding-left: 24px;
+      line-height: 18px;
+      font-size: 14px;
+      margin: 8px 0 8px;
+      background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAEmUlEQVRYhc2Yz48URRTHv/WqeqZ3ZwYPxKMSjOGXJ00I8jMcCGgMy57wIEdcorL6H/g/IOgBEr2QEDnBEmMIJBwgEg8cVZYYDHiDbNjdnpntrnrvlYfpWXeXYd0dZlm/p5qadPenv+/1q6pnJg4eRC8lxqDmHKwxAICqtUitRZVoc0J0JCHaZ43ZTsZsMkADACKQaYyPJMY/guqdoHq9UP0rF0EhAgCQGNFiRogRAHD01q1Fz3VLQQyA4fLhAJBai7pztmLt8ZTodEK0O7XWOCJYY0AATAkdY9yowEaJ8T1W/SQXiUH1bq56zotcbjJLLoINSYJcBO0S8oVABKCRJHDGwBF1YQ7VnTs7ZO221FokRD0dRQlGAJwxqBKh5pwJqntykT1zIl87ovEm881cBCkA1+Ne80AEYEOSwBrTBUlrzp1pJMlYai0qy4Asp4QICRGqnRe6USU632L+qsmc5y9yyJTOdGEaSfL6hiT5qe7czpp7Lqp9qUKESifMY47oXWPMRwCe9gSqOdexuYR5LUlu153bOjwgmIWqOQcD7DTAbQD7l0JRUsbbEaHh3HDDuWtrBdPVsHOoO7e14dy1ByMjwwv/c92QpNaizJldq4K5cAEYGuqM221gbGzFUBHYJTGeAfBpd54WJPGhRpKcXHXOPHvWe7wC1ZxDI0lOPhwdPTQPBAB156ju3Dfd2rMqZdm/42Zz1ZeXZpx9MDJiAYCq1qJi7cdD1m7v69Oem+s9XqEqRBiydlvF2uMAQKm1SIm+6MsdACiK3uNVqGQ4DQBUrk17lqvAy2phcetR6Faisnju/vPYsbeoQvRBaq3pj2ZwSq01FaIj5Ij29lpTXrVcpxbuJWvMO90tRl/K84EAWWNgjdlBZMwbL+WP6kCACAAZs4kM0DAv49CAZIyBAerrnzxLRBHIYrmdXE/FGBGBJmmMfw8mC15OCkBjfEwS4+/yP3BIYoTE+Jt5NDr62cZq9btB7Qz7VYsZU0XxOXnV67nIuluUi0Svep0K1YdB9ZcwoHrSj4Iqgurdt69efehyEeSq3+Yie/taYC9eXPz7xIlV36JkOAcAVIjAi1yeE7nv18Elr4o5kfte5DJQ7hibzNJkHu91Tlpr5SJoMX+5ZWJCAIAkRuQiaDLfzEL4ocX8ymBazMhC+H7zlSs3unOuxTx/1m4xn7bG7DDAyk8efeQMALQ7ML+2mMcXzlOIEYUqWBUZcztjPtpknmyvoVNtZjSZJzPmo1smJtqLgICOdRwjChFkITydCeFAxnxvLcLXYkbGfG8mhANZCM8dpQkAIoAsBHTzKQvhyYz3+6e9Pz8bAgbx9XlVzIaAae/Pz3i/LwvhSa+PaL7wKIDZEMAl1HQIc1Pen5oqisPT3k9mIaCf4hlU0WTGtPeTU0VxeMr7U9Mh5LkIuMcauihzu1DD1iIF0Ozk1o2g+k6707AaT4jeX9qwonKDpzFC0VkoWRVeFYVIt2H1Y7dhBWBlDSugE76WCLwqas51qqiIVK29lFp7qUq0uUL0oeu09LaRMW8aYEN57azG+FhivM+qd7zqz//V0luqfwB5hHW18Eg3bwAAAABJRU5ErkJggg==') no-repeat left top/18px 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+
+    <form class="data">
+
+      <div class="form-group">
+        <label for="exampleInputEmaill1">邮箱</label>
+        <input type="email" class="form-control" id="exampleInputEmaill1"
+        placeholder="请输入合法邮箱"
+        data-dr-regexp="^\w+@\w+\.\w+&"
+        data-dr-regexp-message="请输入合法邮箱"
+        data-dr-required=true
+        data-dr-required-message="输入不能为空"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">手机号码</label>
+        <input type="text" class="form-control" id="exampleInputPassword1"
+        placeholder="请输入合法手机号码"
+        data-dr-regexp="^1\W{10}"
+        data-dr-regexp-message="请输入合法手机号码"
+        data-dr-required=true
+        data-dr-required-message="输入不能为空"
+        >
+      </div>
+
+        <div class="form-group">
+        <label for="exampleInputPassword1">密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1"
+        placeholder="请输入有效密码"
+        data-dr-regexp="^1\w{8}&"
+        data-dr-regexp-message="密码由数字字母下划线组成"
+        data-dr-required=true
+        data-dr-required-message="输入不能为空"
+        data-dr-min-length=6
+        data-dr-min-length-message="密码蹦年小于6个字符"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputPassword1">座机号码</label>
+        <input type="text" class="form-control" id="exampleInputPassword1"
+        placeholder="请输入有效座机号码"
+        data-dr-regexp="^\w{2,3}-\w{7,8}&"
+        data-dr-regexp-message="请认真检查区号(3,4)-座机号(7,8)"
+        data-dr-required=true
+        data-dr-required-message="输入不能为空"
+        >
+      </div>
+
+      <button type="submit" class="btn btn-default">注册</button>
+
+    </form>
+
+  </div>
+
+  <div class="base64-div"></div>
+
+  <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+
+  <script type="text/javascript" src="dataResult.js"></script>
+
+  <script type="text/javascript">
+    // 课程地址: https://ke.qq.com/webcourse/index.html#cid=383405&term_id=100457110&taid=3166125336943021&type=1024&vid=5285890788306652191
+  
+    // $().dataResult();          // 需求: 使用这种方法调用
+    // $('form').dataResult();    // 需求: $("form").dataResult() 是form才给调用
+    // $('.data').dataResult();   // 需求: $(".data").dataResult() 是form才给调用
+    
+    // 用户配置 >= 默认配置
+    // $('.data').dataResult({
+    //   intiEvent: "blur"
+    // });
+    // 
+
+
+    
+    $('.data').dataResult();
+    
+
+    $.fn.dataResult.extension({
+      "min-length": function(data) {
+        return this.val().length >= Number(data);
+      }
+    });
+  </script>
+</body>
+</html>

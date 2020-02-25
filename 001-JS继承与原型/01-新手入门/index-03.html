@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 原型方法与对象方法优先级</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  // let hd = {
+  //   show() {
+  //     console.log("前端人");
+  //   }
+  // };
+  // console.log(hd.__proto__); // 有原型 __proto__
+  // hd.show(); // 前端人
+  // // hd.render(); // Uncaught TypeError: hd.render is not a function
+  // hd.__proto__.render = function() {
+  //   console.log("render方法输出");
+  // }
+  // hd.render();
+
+
+  let hd = {
+    show() {
+      console.log("前端人");
+    },
+    render() {
+      console.log("render方法输出 hd自己的方法");
+    }
+  };
+  console.log(hd.__proto__); // 有原型 __proto__
+  hd.show(); //  前端人
+  // hd.render();    //  Uncaught TypeError: hd.render is not a function
+
+  hd.__proto__.render = function() {
+    console.log("render方法输出");
+  }
+
+  hd.render();       //  render方法输出 hd自己的方法
+  </script>
+</body>
+
+</html>

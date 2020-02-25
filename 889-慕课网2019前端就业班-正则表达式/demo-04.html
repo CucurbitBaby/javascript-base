@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>匹配HTML标签</title>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+
+// // 匹配HTML标签(不要内容的哦)
+// var str = '<p class="odd" id="oddId">123内容 </p>';
+// // 正向思考
+// // 不光要匹配<p class="odd" id="oddId"> 还要匹配 </p> 甚至所有的标签都要匹配  首先一个g
+// // 所有的标签都是<>这样子的,  /<>/g
+// // 第一个</> /可有可无:  /<\/?>/                             ? => {0,1}
+// // <大小写字母都可以>:  /<\/?[a-zA-Z]+>/                     + => {1,}
+// // 后面的开始属性 class="odd" id="oddId: 就组成一个小单元了, 分组
+// // /<\/?[a-zA-Z]+()>/
+// // ()可以能什么都没有, 也可能有很多个属性: /<\/?[a-zA-Z]+()*>/ * => {0,}
+// // ()里面首先来个空格, 也可能多个空格 /<\/?[a-zA-Z]+(\s+)*>/ 
+// // ()里面的属性名 /<\/?[a-zA-Z]+(\s+[a-zA-Z]+)*>/ 
+// // ()里面的=等号 /<\/?[a-zA-Z]+(\s+[a-zA-Z]+=)*>/ 
+// // ()里面的=双引号 /<\/?[a-zA-Z]+(\s+[a-zA-Z]+="")*>/ 
+// // ()双引号里面的可以是空 || 很多  /<\/?[a-zA-Z]+(\s+[a-zA-Z]+=".*")*>/     .除了\n  * => {0,}
+
+// var pattern = /<\/?[a-zA-Z]+(\s+[a-zA-Z]+=".*")*>/g;
+// console.log(
+//   str.match(pattern)    // (2) ["<p class="odd" id="oddId">", "</p>"]
+// )
+
+
+// 逆向思维
+// // /< 所有内容都是双尖括号里包着的 >/g
+// // 刚才穷举了, 里面可能有字母, 空格, 等号之类的;  不可能有> 一旦碰到> 匹配就结束了
+// // /<[^>]+>/g
+
+// var str = '<p class="odd" id="oddId">123内容 </p>';
+// var pattern = /<[^>]+>/g;
+// console.log(
+//  str.match(pattern)    // (2) ["<p class="odd" id="oddId">", "</p>"]
+// )
+
+// 逆向思维容易考虑不周
+// 特例
+// var str = '<input type="text" value=">" name="username" />';
+// var pattern = /<[^>]+>/g;       // ["<input type="text" value=">"]  后面的username和>后面的内容都没有匹配到
+// console.log(
+//  str.match(pattern)    
+// )
+
+
+// 大神支招
+// 里面的属性都是"" 和 ""里面属性值构成的 还有vlue=都是 ""之外的内容; 由这两部分组成, 我们需要把这两部分都写出来 或
+// <input type= 或者 "text"  全局+多个
+// /<>/g;
+// /<[^"]>/g; 除了双引号
+// /<[^"'>]>/g; 除了双引号或单引号(属性='属性值')和> 之外的所有的内容; 这是一种情况匹配引号之外的
+// /<[^"'>]|"">/g;      双引号里面的内容
+// /<[^"'>]|"[^"]*">/g; 双引号里面的内容, "除了双引号都可以"   *=>{0,} 属性值可以为空嘛
+// /<[^"'>]|"[^"]*"|'[^']*'>/g;  单引号里面的内容, "除了单引号都可以"
+// 这是三个内容里面匹配一个  三选一
+// 但是我们可能有很多标签
+// /<([^"'>]|"[^"]*"|'[^']*')*>/g;  其实这个分组设计, 一开始就要设计的
+
+// var str = '<input type="text" value=">" name="username" />aaaa<p class="odd" id="oddId">123内容 </p>';
+// // var pattern = /<([^"'>]|"[^"]*"|'[^']*')*>/g;
+// var pattern = /<(?:[^"'>]|"[^"]*"|'[^']*')*>/g;     // 通知引擎, 这是非捕获性的内容
+// console.log(
+//  str.match(pattern)     // ["<input type="text" value=">" name="username" />"]
+// )
+
+// 大神瘦身
+// /<(?:)*>/g;
+// /<(?:[^"'>])*>/g;
+// /<(?:[^"'>]|["'])*>/g; 开头是"|'开头都没有关系
+// /<(?:[^"'>]|["'][^"|'])*>/g;  这里就要保证一下 前面匹配到的双引号, 结尾也要双引号
+// /<(?:[^"'>]|(["'])[^"|']*\1)*>/g;
+var str = '<input type="text" value=">" name="username" />aaaa<p class="odd" id="oddId">123内容 </p>';
+// var pattern = /<(?:[^"'>]|"[^"]*"|'[^']*')*>/g;     // 通知引擎, 这是非捕获性的内容
+var pattern = /<(?:[^"'>]|(["'])[^"|']*\1)*>/g         // (3) ["<input type="text" value=">" name="username" />", "<p class="odd" id="oddId">", "</p>"]
+console.log(
+ str.match(pattern)     // ["<input type="text" value=">" name="username" />"]
+)
+
+</script>
+</body>
+</html>

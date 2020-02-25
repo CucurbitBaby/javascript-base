@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>选择/分组和引用; 捕获性分组/非捕获性分组</title>
+</head>
+<body>
+  
+<script>
+  // var str = 'js';                // js
+  // var str = 'css html js';          // css
+  // // var pattern = /html|css|js/;   // 选择(或) 字符串中匹配 html|css|js 只要匹配到其中一个(html) 其他的就忽略
+  // var pattern = /js|html|css|/;     // css
+  // console.log(pattern.exec(str));
+
+  // var str = 'ab';
+  // var pattern = /a|ab/;          // 选择 选择最先匹配的 而不是最合适的, a
+  // console.log(pattern.exec(str));
+
+  // var str = 'abab';
+  // // var pattern = /ab+/;            // +号能影响的仅仅是+前一个字符  ab
+  // var pattern = /(ab)+/;             // 分组 ["abab", "ab",   贪婪      ab加括号就行了
+  // console.log(pattern.exec(str));
+
+  // (2) ["abab", "ab", index: 0, input: "abab", groups: undefined]
+  // 0: "abab"
+  // 1: "ab"
+  // index: 0
+  // input: "abab"
+  // groups: undefined
+  // length: 2
+  // __proto__: Array(0)
+
+  // var str = 'abcd';
+  // var pattern = /(ab)c/;            // ["abc", "ab" 贪婪 捕获ab
+  // console.log(pattern.exec(str));
+  // // ["abc", "ab", index: 0, input: "abcd", groups: undefined]
+
+
+  // var str = 'abcd';
+  // var pattern = /(?:ab)c/;            // ?:修改为非捕获性分组    abc
+  // console.log(pattern.exec(str));
+
+  // // 平行分组括号
+  // var str = 'abcd';
+  // var pattern = /(ab)(c)/;               //  ["abc", "ab", "c"
+  // console.log(pattern.exec(str));
+  // // ["abc", "ab", "c", index: 0, input: "abcd", groups: undefined]
+
+  // 嵌套分组括号 (abc) (a(bc)) (a(b(c)))
+  // var str = 'abcd';                     // 都是先忽略括号匹配全部
+  // var pattern = /(a(b(c)))/;            // ["abc[匹配结果]", "abc", "bc", "c",
+  // console.log(pattern.exec(str));
+  // // 不用管如何嵌套的, 从左边数括号就行了, 
+  // // 第一个括号: 一个分组   a(b(c)) 
+  // // 第二个括号: 一个分组   b(c)
+  // // 第三个括号: 一个分组   c
+
+  // 引用
+  // 除了捕获分组到exec()输出使用, 还可以在正则中直接使用分组, 前提是我们要捕获
+  // var str = 'ab cd ab';
+  // var pattern = /(ab) cd \1/;       // 引用: \1代表前面的第1个分组  引用: \2代表前面的第2个分组
+  // console.log(pattern.exec(str));   // ["ab cd ab[匹配结果]", "ab[分组]"
+  // ["ab cd ab", "ab", index: 0, input: "ab cd ab", groups: undefined]
+
+
+  // 应用: 匹配(不一定是p|div) 里面的所有内容
+  var str = '<p><a>这是一段文字</a></p>';
+  var pattern = /<([a-zA-Z]+)>(.*?)<\/\1>/;
+  console.log(pattern.exec(str));
+  // 1. 因为不一定是p 所以用到字符类(做一个分组 标签结果直接用, 保持一致)
+  // 2. 所有内容分组() .*所有内容 *? 禁止贪婪匹配
+  // 'abc' /c/ 
+  // index: 2
+  // input 字符串
+</script>
+</body>
+</html>

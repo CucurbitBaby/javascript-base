@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 继承是原型的继承</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+
+/*
+
+  // let f = {};
+  // 原型即对象
+  // console.log(f.__proto__);
+  // console.log(Object.getPrototypeOf(f));
+  // // 设置原型
+  // console.log(Object.setPrototypeOf(f, {}));
+
+  // 推荐这样写
+  function User() {}
+
+  User.prototype.name = function() {
+    console.log('user name method!!!');
+  }
+  
+  let hd = new User();
+  hd.name();
+
+  // Admin也想用name()方法
+  function Admin() {};
+  // console.log(Admin.prototype.__proto__ === Object.prototype);    // true
+
+  // Admin.prototype  = User.prototype;       // 咋一看, 只是这个简单的场景可以使用而已
+  Admin.prototype.__proto__ = User.prototype; // 好处是保留自己的, 继承父级的
+  // 如果Admin有一个后台角色的方法
+  Admin.prototype.role = function() {
+    console.log('超级管理权限  被别人用了吗?');
+  }
+  let a = new Admin();
+  a.name();
+  a.role();
+
+
+  function Member() {};
+  // Member.prototype = User.prototype;    // 造成的后果很严重后果
+  Member.prototype.__proto__ = User.prototype;
+
+  Member.prototype.role = function() {
+    console.log('全部乱套了吗? 并没有呢');
+  }
+  let m = new Member();
+  m.name();
+  m.role();         // 超级管理权限  被别人用了
+
+  // 三个对象共用了一个原型对象  不靠谱的呀
+
+
+  // 继承的精髓,  A继承财产的时候, A自己财产还是有, 
+  // 正常情况下继承  本身的原型还要保留的
+
+
+//*/
+
+
+
+
+    // let f = {};
+  // 原型即对象
+  // console.log(f.__proto__);
+  // console.log(Object.getPrototypeOf(f));
+  // // 设置原型
+  // console.log(Object.setPrototypeOf(f, {}));
+
+  // 推荐这样写
+  function User() {}
+
+  User.prototype.name = function() {
+    console.log('user name method!!!');
+  }
+  
+  let hd = new User();
+  hd.name();
+
+  // Admin也想用name()方法
+  function Admin() {};
+  // console.log(Admin.prototype.__proto__ === Object.prototype);    // true
+
+  // Admin.prototype  = User.prototype;       // 咋一看, 只是这个简单的场景可以使用而已
+  // Admin.prototype.__proto__ = User.prototype; // 好处是保留自己的, 继承父级的
+  Admin.prototype = Object.create(User.prototype); // 创建新的对象 / 还有原来的对象呢,  这句继承代码一定要放在 new Admin()实例化之前
+  // 如果Admin有一个后台角色的方法
+  Admin.prototype.role = function() {
+    console.log('超级管理权限  被别人用了吗?');
+  }
+  let a = new Admin();
+  a.name();
+  a.role();
+
+
+  function Member() {};
+  // Member.prototype = User.prototype;    // 造成的后果很严重后果
+  // Member.prototype.__proto__ = User.prototype;
+  Member.prototype = Object.create(User.prototype); // 创建新的对象
+
+  Member.prototype.role = function() {
+    console.log('全部乱套了吗? 并没有呢');
+  }
+  let m = new Member();
+  m.name();
+  m.role();         // 超级管理权限  被别人用了
+
+  // 三个对象共用了一个原型对象  不靠谱的呀
+
+
+  // 继承的精髓,  A继承财产的时候, A自己财产还是有, 
+  // 正常情况下继承  本身的原型还要保留的
+
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples isPrototypeOf原型检测</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+      
+/*
+      let a = {};
+      let b = {};
+
+      // Object.prototype.isPrototypeOf()  兼容性差
+      // isPrototypeOf() 方法用于测试一个对象是否存在于另一个对象的原型链上。
+      // prototypeObj.isPrototypeOf(object)
+      console.log(b.isPrototypeOf(a));                   // false
+      console.log(Object.isPrototypeOf(a));              // false
+      console.log(Object.prototype.isPrototypeOf(a));    // true
+      console.log(a.isPrototypeOf(Object.prototype));    // false
+      // a.isPrototypeOf(b);  检测a对象 是否在 b对象的原型链上。
+
+      console.log(b.__proto__.isPrototypeOf(a));         // true
+      console.log(b.__proto__ === Object.prototype);     // true
+
+//*/
+
+/*
+      let a = {};
+      let b = {};
+      // 设置为a对象的原型 为 b对象
+      Object.setPrototypeOf(a, b);
+      console.log(b.isPrototypeOf(a));    // true
+*/
+
+      let a = {};
+      let b = {};
+      let c = {};
+      // 设置为a对象的原型 为 b对象
+      Object.setPrototypeOf(b, c);
+      Object.setPrototypeOf(a, b);
+      console.log(b.isPrototypeOf(a));    // true
+      console.log(c.isPrototypeOf(b));    // true
+      
+      console.log(c.isPrototypeOf(a));    // true
+
+  </script>
+</body>
+
+</html>

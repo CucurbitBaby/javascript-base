@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>第一次亲密接触--编程练习</title>
+</head>
+<body>
+
+<script>
+	// 1.匹配字符串'JavaScript_RegExp_5@gmail.com'中的_regexp_5@gm
+	// 要求：1.用两种方式创建正则表达式 2.用exec和test方法去验证匹配结果
+	var str = 'JavaScript_RegExp_5@gmail.com';
+	var pattern1 = /_regexp_5@gm/i;
+	var pattern2 = new RegExp('_regexp_5@gm', 'i');
+	console.log(pattern1.test(str));
+	console.log(pattern2.test(str));
+	console.log(pattern1.exec(str));
+	console.log(pattern2.exec(str));
+
+	// 2.现有获取到的用户输入var userInput = '正则';
+	// 请利用它创建正则表达式，匹配字符串'正则表达式'
+	// 要求：使用exec和test方法验证匹配结果
+	var str = '正则表达式';
+	var userInput = '正则';
+	var pattern = new RegExp(userInput);
+	console.log(pattern.test(str));
+	console.log(pattern.exec(str));
+</script>
+</body>
+</html>

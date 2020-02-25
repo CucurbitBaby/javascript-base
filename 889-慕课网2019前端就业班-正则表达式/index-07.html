@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>指定匹配位置(字符首匹配, 尾匹配, 边界匹配) getByClassName兼容封装, 前瞻性匹配, 负向前瞻性</title>
+</head>
+<body>
+  
+<!-- <p class="odd2      odd    ">1</p>
+<p class="even">2</p>
+<p class="odd">3</p>
+<p class="even">4</p> -->
+
+<p class="odd2      odd    ">1</p>
+<p class="even">2</p>
+<p class="odd">3</p>
+<p class="even">4</p>
+
+<script>
+  // 字符首匹配
+  // var str = 'js';
+  // var str = 'html js';        // null
+  // var pattern = /^js/;        // ^表示位置, 强调j必须从字符串的开头开始匹配 ^这不是取反[^取反]了
+  // console.log(pattern.exec(str));
+  // /[^0-9]/
+
+  // 尾匹配
+  // var str = 'html js';        // js 
+  // // var str = 'html js css'; // null
+  // var pattern = /js$/;     // $表示位置, 强调末尾位置前面一定要是s才行
+  // console.log(pattern.exec(str));
+
+  // 购物的数量, 如何保证输入的数量都是数字呢？
+  // var str = '110119120';
+  // var pattern = /^\d+$/;    // 1. 数字\d 2.很多数字 \d+ 3.全书数字 ^\d 和 \d$
+  // // console.log(pattern.exec(str));
+  // if (pattern.test(str)) {
+  //  console.log('全是数字！');
+  // } else {
+  //  console.log('不全是数字！');
+  // }
+  // 全是数字！
+
+  // 逆向思维 找到一个不是数字的就行了
+  // var str = '11011a9120';
+  // var pattern = /\D/;                   // 非数字
+  // console.log(pattern.exec(str));
+  // if (pattern.test(str)) {
+  //  console.log('不全是数字！');
+  // } else {
+  //  console.log('全是数字！');
+  // }
+  // 不全是数字
+
+  // 边界匹配
+  // var str = 'js html';
+  // var pattern = /js\b/;           // \b -> 匹配位置 单词的边界,  \b表示\w和\W之家你的位置
+  // console.log(pattern.exec(str));
+  // ["js", index: 0, input: "js html", groups: undefined]
+
+  // var str = '@@@js@@@';
+  // var pattern = /\bjs\b/;           // @j可用1个\b   s@可用一个\b
+  // console.log(pattern.exec(str));
+  // ["js", index: 3, input: "@@@js@@@", groups: undefined]
+  
+  // 例子
+  // 通过class获取元素
+  // var oddP = getByClassName('odd');
+  // var evenP = getByClassName('even');
+  // for (var i = 0; i < oddP.length; i++) {
+  //  oddP[i].style.backgroundColor = 'red';
+  // }
+  // for (var i = 0; i < evenP.length; i++) {
+  //  evenP[i].style.backgroundColor = 'yellow';
+  // }
+
+  // // 这个更好用
+  // function getByClassName(className, parentNode) {
+  //  if (document.getElementsByClassName) {
+  //    return document.getElementsByClassName(className);
+  //  } else {
+  //    console.log(1);
+  //    parentNode = parentNode || document;
+  //    var nodeList = [];
+  //    var allNodes = parentNode.getElementsByTagName('*');     // 获取所有的父节点的子元素
+  //    var pattern = new RegExp('\\b' + className + '\\b');
+
+  //    for (var i = 0; i < allNodes.length; i++) {
+  //      if (pattern.test(allNodes[i].className)) {
+  //        nodeList.push(allNodes[i]);
+  //      }
+  //    }
+
+  //    return nodeList;
+  //  }
+  // }
+
+  // 这个考虑很多情况  <p class="odd2      odd    ">1</p>
+  // function getByClassName(className, parentNode) {
+  //  if (document.getElementsByClassName) {
+  //    return document.getElementsByClassName(className);
+  //  } else {console.log(1);
+  //    parentNode = parentNode || document;
+  //    var nodeList = [];
+  //    var allNodes = parentNode.getElementsByTagName('*');
+  //    // var pattern = new RegExp('(^|\s+)' + className + '($|\s+)');
+  //    // 所有扔到构造函数里的转义字符 都需要双重转义
+  //    var pattern = new RegExp('(^|\\s+)' + className + '($|\\s+)');
+
+  //    for (var i = 0; i < allNodes.length; i++) {
+  //      if (pattern.test(allNodes[i].className)) {
+  //        nodeList.push(allNodes[i]);
+  //      }
+  //    }
+
+  //    return nodeList;
+  //  }
+  // }
+
+  // function getByClassName(className, parentNode) {
+  //  if (document.getElementsByClassName) {
+  //    return document.getElementsByClassName(className);
+  //  } else {
+  //    console.log(1);
+  //    parentNode = parentNode || document;
+  //    var nodeList = [];
+  //    var allNodes = parentNode.getElementsByTagName('*');
+
+  //    for (var i = 0; i < allNodes.length; i++) {
+  //      if (allNodes[i].className === className) {
+  //        nodeList.push(allNodes[i]);
+  //      }
+  //    }
+
+  //    return nodeList;
+  //  }
+  // }
+
+  // 前瞻性匹配
+  // 只有java后面跟着script 才 匹配java
+  // var str = 'java';
+  // var pattern = /java(?=script)/;     // 前瞻性匹配
+  // console.log(pattern.exec(str));
+
+  // 负向前瞻性 
+  // 只有java后面跟着script 就不匹配 java
+  var str = 'javasda';
+  // var str = 'javascript';   // null
+  var pattern = /java(?!script)/;       // 负向前瞻性 
+  console.log(pattern.exec(str));
+
+
+</script>
+</body>
+</html>

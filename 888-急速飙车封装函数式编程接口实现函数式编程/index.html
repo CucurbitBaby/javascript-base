@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 简单实现函数式编程</title>
+</head>
+
+<body>
+  <script type="text/javascript" src="js/underscore.js"></script>
+  <script type="text/javascript">
+  /*
+    // 课程地址: https://ke.qq.com/webcourse/index.html#cid=130952&term_id=100146108&taid=3164463184347016&vid=5285890787907800433
+
+    1. 套路第一招就是借鉴(抄)
+      1.1 (function() { .. };)(); 匿名自执行函数。
+      1.2 root赋值, 判断node环境
+  */
+
+  // console.log(_().map);
+  // _().map();
+
+  var testObj = {};
+  var arr = [1, 1, 2, 2, 3, 3, {}, {}, 5, 6, 6, testObj, testObj, 'max', 'max', 'a', "A"];
+
+  // console.log(_.unique(arr, function(name){
+  //   // console.log('执行了callback')
+  //   return typeof name == 'string' ? name.toLowerCase() : name;
+  // }));
+
+  // 面向对象的方式
+  console.log(_(arr).unique(false, function(name){
+    // console.log('执行了callback')
+    return typeof name == 'string' ? name.toLowerCase() : name;
+  }));
+
+
+  </script>
+</body>
+
+</html>

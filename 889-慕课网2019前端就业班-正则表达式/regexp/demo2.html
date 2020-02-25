@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>第二次深入了解--编程练习</title>
+</head>
+<body>
+
+<script>
+	// 简单的转义字符
+	// 1.匹配字符串'/[a\nb]/'
+	// 提示：1./、[、]都是特殊字符，需要转义 2.\n前面的\不用再转义了，因为它本身就是转义字符
+	var str = '/[a\nb]/';
+	var pattern = /\/\[a\nb\]\//;
+	console.log(pattern.exec(str));
+
+	// 字符类
+	// 2.请写出能够匹配任意一个字符的正则表达式
+	// 提示：1.字符类和它相反的字符类加在一起就可以匹配所有字符
+	/[\w\W]/ 或
+	/[\d\D]/ 或
+	/[\s\S]/ 或
+	/[^]/
+
+	// 3.注册网站时，一般都需要填写用户名。现要求用户名可以包含
+	// 空格、中文、字母、数字以及下划线，请写出能与之匹配的正则表达式
+	// 提示：1.将满足要求的全部写入[]中即可
+	/[\u4e00-\u9fa5\sa-zA-Z0-9_]/ 或
+	/[\u4e00-\u9fa5\sa-z0-9_]/i 或
+	/[\u4e00-\u9fa5\s\w]/
+
+	// 重复
+	// 4.分别写出匹配正整数、负整数以及既能匹配正整数，也能匹配负整数的正则表达式
+	// 提示：1.注意0是整数，不是正整数，也不是负整数
+	正整数： /[1-9]\d*/
+	负整数： /-[1-9]\d*/
+	正整数和负整数：/-?[1-9]\d*/
+
+	// 5.现有字符串'js[javascript];html[hyper text markup language];css[cascading style sheet];',
+	// 请匹配第一个[]以及它里面的内容，不得直接用[javascript]匹配
+	// 提示：1.注意贪婪的问题 2.[和]需要转义
+	var str = 'js[javascript];html[hyper text markup language];css[cascading style sheet];';
+	var pattern = /\[.*?\]/;
+	console.log(pattern.exec(str));
+
+	// 选择、分组和引用
+	// 6.写出匹配整数的正则表达式
+	// 提示：1.整数包括正整数，负整数和0
+	/0|-?[1-9]\d*/
+
+	// 7.html标签的属性值既可以放在""中，也可以放在''中，例如<p class="box" id='box'></p>
+	// 请写出既能匹配""中内容，又能够匹配''中内容的正则表达式
+	// 提示：1.可以用选择的写法 2.保证前后所用引号的一致性
+	/"[^"]*"|'[^']*'/ 或者
+	/(["'])[^"']\1/
+
+	// 指定匹配位置
+	// 8.某网站注册需要实名认证，请写出验证用户输入的姓名是否合法的正则表达式
+	// 提示：1.请使用首尾匹配 2.假设一般人的名字最少2个字，最多4个字
+	/^[\u4e00-\u9fa5]{2,4}$/
+
+	// 9.现有字符串'weekend,endfor,end'，请写出两个匹配最后一个end的正则表达式
+	// 提示：1.可以用尾匹配 2.可以用匹配单词边界的\b
+	/end$/ 或
+	/\bend\b/
+
+	// 10.现有字符串'Windows98, WindowsXP, Windows7'，请分别写出匹配后面是XP的Windows和后面不是7的Windows的两个正则表达式
+	// 提示：1.前瞻性匹配和负向前瞻性匹配
+	/Windows(?=XP)/
+	/Windows(?!7)/
+
+	// RegExp对象
+	// 11.匹配字符串'weekend,endfor,end'中所有的end，并分别打印出其中的字母e
+	// 提示：1.全局匹配 2.exec循环打印
+	var str = 'weekend,endfor,end';
+	var pattern =/(e)nd/g;
+	var result;
+	while((result = pattern.exec(str)) != null) {
+		console.log(result[1]);
+	}
+
+	// String对象与正则表达式相关的方法
+	// 12.找出字符串'110报警120急救119火警114查询'中的所有数字，并打印出来
+	// 提示：1.全局匹配 2.match
+	var str = '110报警120急救119火警114查询';
+	var pattern =/\d+/g;
+	console.log(str.match(pattern));
+
+	// 13.找出字符串'asdfgaaaafdgdgaaaadgsxcvcxva'中出现次数最多的字符，并打印出其出现的次数
+	// 提示：1.利用数组排序 2.利用引用匹配相同的字符
+	var str = 'asdfgaaaafdgdgaaaadgsxcvcxva';
+	var arr = str.split(''); // 转换成数组
+	str = arr.sort().join(''); // 排序之后再拼成字符串，此时相同的字符紧挨在了一起
+	var value = ''; // 出现次数最多的字符
+	var count = 0; // 出现次数
+	var pattern =/(\w)\1+/g; // 匹配紧挨着的相同字符
+	str.replace(pattern, function ($0, $1) {
+		// $0表示匹配到的所有相同字符，$1表示第一个分组匹配的字符，也就是单个字符
+		if (count < $0.length) {
+		// 如果$0.length>count，就表示此时匹配到的字符，到目前为止是出现次数最多的
+			count = $0.length;
+			value = $1;
+		}
+	});
+	console.log('出现次数最多的字符是：'+value+'，共出现'+count + '次');
+</script>
+</body>
+</html>

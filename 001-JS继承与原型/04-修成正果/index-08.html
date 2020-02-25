@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 38好用的Tab业务管理类</title>
+
+  <style>
+    main {
+      float: left;
+      width: 300px;
+    }
+    nav a:nth-child(1),
+    nav a:nth-child(2) {
+      color: #fff;
+      border: 1px solid #000;
+      font-size: 14px;
+      padding: 5px;
+      text-decoration: none; 
+    }
+    nav a:nth-child(1) {
+      background: #E7782A;
+    }
+    a {
+      float: left;
+    }
+    nav a:nth-child(2) {
+      background: #899B9E;
+
+    }
+    nav {
+
+    }
+    section {
+      clear: both;
+      width: 95%;
+      background: #F1BC12;
+      height: 150px;
+      font-size: 30px;
+      text-align: center;
+      line-height: 150px;
+    }
+    section:nth-child(2) {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  
+  <main class="tab1">
+    <nav>
+      <a href="javascript:;">前端人 </a>
+      <a href="javascript:;">front.com</a>
+    </nav>
+    <section>1</section>
+    <section>2</section>
+  </main>
+  
+  <main class="tab2">
+    <nav>
+      <a href="javascript:;">前端人</a>
+      <a href="javascript:;">front.com</a>
+    </nav>
+    <section>1</section>
+    <section>2</section>
+  </main>
+
+
+  <script type="text/javascript">
+    
+  // sub: 子类, sup: 父类
+  function extend(sub, sup) {
+    sub.prototype = Object.create(sup.prototype);
+    sub.prototype.constructor = Animation;
+    Object.defineProperty(sub.prototype, "constructor", {
+      value: sub,
+      enumerable: false
+    });
+  }
+
+
+  function Animation() {};
+
+  Animation.prototype.show = function() {
+    this.style.display = "block";
+  }
+
+  Animation.prototype.hide = function() {
+    this.style.display = "none";
+  }
+
+  Animation.prototype.background = function(color) {
+    this.style.backgroundColor = color;
+  }
+
+  // let tab = document.querySelector('.tab2');
+
+  // Animation.prototype.hide.call(tab);
+  // Animation.prototype.background.call(tab, "red");
+
+
+  function Tab(el) {
+    this.tab = document.querySelector(el);
+    this.links = this.tab.querySelectorAll('a');
+    this.sections = this.tab.querySelectorAll('section');
+    // console.log(this.tab);
+    // console.log(this.links);
+    // console.log(this.sections);
+  }
+
+  extend(Tab, Animation);
+
+  Tab.prototype.run = function() {
+    this.bindEvent();
+    this.reset();
+    this.action(0);
+  }
+
+  Tab.prototype.bindEvent = function() {
+      this.links.forEach((el, i) => {
+        el.addEventListener("click", () => {
+          this.reset();
+          this.action(i);
+        })
+      })
+  }
+
+  Tab.prototype.action = function(i) {
+    // console.log(i);
+    this.background.call(this.links[i], '#E7782A');
+    this.show.call(this.sections[i]);
+
+
+  };
+
+  Tab.prototype.reset = function() {
+    this.links.forEach((el, i) => {
+      this.background.call(this.links[i], '#899B9E');
+      this.hide.call(this.sections[i])
+
+    });
+  }
+
+  new Tab('.tab1').run();
+  new Tab('.tab2').run();
+
+
+
+  </script>
+</body>
+</html>

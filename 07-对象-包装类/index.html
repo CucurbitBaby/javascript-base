@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 对象-包装类</title>
+</head>
+<body>
+  
+
+  <script type="text/javascript">
+    // 对象是一个基础数据类型
+    // var mrDeng = {
+    //   name: "MrDeng",
+    //   age: 40,
+    //   sex: "male",
+    //   health: 100,
+    //   smoke: function () {
+    //     console.log("我觉得抽烟很酷");
+    //     // mrDeng.health --;  // 这句话 相当于 麦克阿瑟演讲的时候说: "伟大麦克阿瑟今天.."
+    //     this.health --;
+    //   },
+    //   drink: function () {
+    //     console.log("我觉得喝酒很酷");
+    //     // mrDeng.health ++;
+    //     this.health ++;
+        
+    //   }
+    // }
+
+    // 增, 删, 改, 查是计算机通用操作, 不是数据库专用
+    // 增
+    // var mrDeng = {
+    //   name: "MrDeng",
+    //   age: 40,
+    //   sex: "male",
+    //   health: 100,
+    //   smoke: function () {
+    //     console.log("我觉得抽烟很酷");
+    //     // mrDeng.health --;  // 这句话 相当于 麦克阿瑟演讲的时候说: "伟大麦克阿瑟今天.."
+    //     this.health --;
+    //   },
+    //   drink: function () {
+    //     console.log("我觉得喝酒很酷");
+    //     // mrDeng.health ++;
+    //     this.health ++;
+        
+    //   }
+    // }
+    // mrDeng.wife = "xiaoliu";
+    // console.log(mrDeng);
+    // 
+    // 查: mrDeng.xiaoliu
+    // 浏览器控制台相当于HTML最底部
+
+    // 改:
+    // mrDeng.wife = "daliu";
+    
+    // 删: delete mrDeng.name
+
+
+    // 例子
+    // var deng = {
+    //   prepareWife: "xiaowang",      // 准备的妻子
+    //   name: "老邓",
+    //   gf: "xiaoliu",  
+    //   wife: "",                   // 妻子
+    //   divorce: function () {      // 离婚
+    //     delete this.wife;
+    //     this.gf = this.prepareWife;
+    //   },
+    //   getMarried: function () {   // 结婚
+    //     this.wife = this.gf;
+    //   },
+    //   changePrepareWife: function(someone) {
+    //     this.prepareWife = someone;
+    //   }
+    // }
+
+    // deng.getMarried();
+    // console.log(deng.wife);
+
+
+    // deng.divorce();
+    // console.log(deng.wife);
+
+    // deng.getMarried()
+    // console.log(deng.wife);
+
+    // deng.changePrepareWife('凤姐');
+    // deng.divorce();
+    // deng.getMarried();
+    // console.log(deng.wife);
+
+
+    // 对象的创建方法
+    // 1. var obj = {};
+    // 2. 构造函数
+    //    1) new 系统自带的构造函数Object();
+    //    2) new 自定义
+
+
+    // 构造函数内部原理
+    // 1.在函数体最前面隐式的加上 this = {}
+    // 2.执行this.xxx = xxx;
+    // 3.隐式的返回this
+    
+
+    // 包装类
+    // new String();
+    // new Boolean();
+    // new Number();
+
+    // 未完待续 面试题
+    // https://ke.qq.com/webcourse/index.html#cid=231577&term_id=100273169&taid=1464794301565081&vid=5285890788041115312
+
+  </script>
+</body>
+</html>

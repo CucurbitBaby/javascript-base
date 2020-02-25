@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 原型链检测之instanceof</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+      
+/*
+    function A() {}
+    let a = new A();
+    // instanceof 运算符用于检测构造函数(A)的 prototype 属性是否出现在某个实例对象(a)的原型链
+    console.log(a instanceof A);    // true
+//*/
+
+
+/*
+  function A() {};
+  function B() {};
+
+  let b = new B();
+  A.prototype = b;
+
+  let a = new A();
+  console.log(a instanceof B);    // true
+
+//*/
+
+
+  function A() {};
+  function B() {};
+  function C() {};
+
+  let c = new C();
+  B.prototype = c;
+
+  let b = new B();
+  A.prototype = b;
+
+  let a = new A();
+  console.log(a instanceof C);    // true
+
+
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples call原理</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+
+
+
+/*
+
+  Function.prototype.myCall = function(content) {
+    var content = content || window;
+    console.log(content);
+
+    content.fn = this;
+    console.log(content.fn)
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+        args.push('arguments[' + i + ']');
+    }
+    var result = eval('content.fn(' + args + ')');
+    delete content.fn;
+    return result;
+  }
+
+  function fn1() {
+      console.log(1);
+  }
+
+  function fn2() {
+      console.log(2);
+  }
+
+  fn1.myCall(fn2)
+
+*/
+  var jishu = 0;
+
+  Function.prototype.myCall = function(content) {
+    jishu++;
+    var content = content || window;
+    // console.log('第'+jishu+'次的myCall中的content即实参:', content);
+    // console.log('第'+jishu+'次的this:', this);
+    console.log(this);
+    content.fn = this;
+
+    // console.log('第'+jishu+'次的myCall中的content.fn => this:', content.fn, '\r\n\r\n\r\n\r\n\r\n\r\n');
+
+
+    var args = [];
+    for (var i = 0; i < arguments.length; i++) {
+        args.push('arguments[' + i + ']');
+    }
+
+    // console.log('第'+jishu+'次的args:', args);  // ["arguments[0]"]或者["arguments[0], arguments[1], .."]
+
+    // 第一次fn1.myCall执行的eval()的时候, this指向了window 
+    var result = eval('content.fn(' + args + ')');
+    // console.log('第'+jishu+'次的result:', result); // 都是undefined
+
+    delete content.fn;
+    // console.log('第'+ jishu +'次','并没有 直接输出test, 而是去继续执行myCall了, 并且在2000输出之后, 才执行两次输出此处');
+    return result;
+  }
+
+  function fn1() {
+      console.log(1000);
+      console.log(this);
+  }
+
+  function fn2() {
+      console.log(2000);
+      console.log(this);
+  }
+
+  // fn1.myCall(fn2);
+/*
+  fn1.myCall(fn2);  执行myCall方法的时候myCall中的this就是fn1
+  然后赋值 fn2.fn => fn1 并且执行 fn => fn1
+*/
+  fn1.myCall.myCall(fn2);
+  
+/*
+  fn1.myCall.myCall(fn2);  执行myCall方法的时候myCall中的this就是fn1.call 函数即对象
+  然后赋值 fn2.fn => fn1.call 并且执行 fn => fn1.call
+  eval()执行  继续传递了参数哦!!!  eval()执行的任然是call方法, 传递实参还是fn2
+  那么fn2.fn => this => fn2了哦, 因为上面是实际是fn2.fn调用执行的, fn1.call也只是一个函数, 上面赋值给了fn2的.fn属性, 是fn2的静态方法
+  eval()执行的就是fn2了
+*/
+
+
+  </script>
+</body>
+</html>
+

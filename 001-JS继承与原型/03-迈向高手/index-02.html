@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples setPrototypeOf</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+  // __proto__ 非标准
+
+  // hd.__proto__ =  有值设置, 无值获取
+  let user = {
+    show() {
+      return this.name;
+    },
+    name: "user的name"
+  };
+
+  let hd = {
+    name: "前端人"
+  }
+ 
+  Object.setPrototypeOf(hd, user);
+
+  console.log(hd.show());      // 前端人
+  console.log(hd.__proto__)    // {name: "user的name", show: ƒ}   获取对象原型
+  console.log(Object.getPrototypeOf(hd));   // 获取对象原型
+
+  </script>
+</body>
+</html>

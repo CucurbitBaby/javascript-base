@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples __proto__原来是属性访问器</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+/*
+
+  // 2-所有的引用类型(数组、对象、函数)都有一个 __proto__ 属性，属性值是一个普通的对象：隐式原型
+  let hd = {
+    name: "前端人"
+  }
+
+  hd.__proto__ = {
+    show() {
+      console.log(this.name)
+    }
+  }
+
+  hd.show();    // 前端人
+  console.log(hd.__proto__);  // 
+
+  hd.__proto__ = 99;          // 系统内置判断, 是对象可以正常执行, 不是对象不执行
+  // hd.__proto__ = {};          // Uncaught TypeError: hd.show is not a function
+  hd.show();    // 还可以正常执行  前端人
+
+
+*/
+
+
+  // let hd = {
+  //   action: {},
+  //   proto: null
+  // }
+
+  // hd.proto = "abc";
+  // console.log(hd.proto);    // abc
+
+  // let hd = {
+  //   action: {},
+  //   get proto() {
+  //     return this.action;
+  //   },
+  //   set proto(obj) {
+  //     if(obj instanceof Object) {
+  //       this.action = obj;
+  //     }
+  //     // console.log(obj);
+  //   }
+  // }
+
+  // hd.proto = {
+  //   view: function() {
+  //     console.log('view方法')
+  //   }
+  // }
+  // hd.proto = "abc";         // 进不去
+  // console.log(hd.proto);    // abc
+
+
+
+  // 面试题, 我就想给对象设置上__proto__
+  // 不继承Ojbect这个原型不就ok了吗？
+  // let hd = {};
+  let hd = Object.create(null);
+  hd.__proto__ = "前端人";         // ok
+  console.log(hd.__proto__);       // 前端人
+
+
+
+  </script>
+</body>
+</html>

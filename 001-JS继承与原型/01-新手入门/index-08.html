@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 原型中的constrctor引用</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  function Animal(){ }
+  var  anim = new Animal();
+
+  console.log(Animal.prototype.constructor === Animal)       //true
+  console.log(Animal.__proto__.constructor === Function)     //true
+
+  /*
+    每个函数对象都有名为 prototype 的属性 (Function.prototype函数对象是个例外，没有prototype属性)  用于引用原型对象。
+    此原型对象又有名为 constructor 的属性，它反过来引用函数本身。
+    这是一种循环引用,而函数也是对象具有__proto__属性(隐式原型) === Function
+    Animal._proto__. constructor就指向了构造它的构造函数
+
+    Animal.prototype.constructor === Animal       //true
+    Animal.__proto__.constructor === Function     //true
+  */
+  </script>
+</body>
+
+</html>

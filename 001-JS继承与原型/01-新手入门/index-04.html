@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 函数拥有多个长辈</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+
+/*
+
+    let front = {};
+    console.log(front);
+
+
+    // 函数对象和普通对象, 函数即是对象, 也可当作构造函数
+    function User() {};
+
+    // 在控制台中显示指定JavaScript对象的属性，并通过类似文件树样式的交互列表显示
+    console.dir(User);
+
+    // 理解这句话, 多个长辈; 小时候放烟花找奶奶要钱, 但是交学费的时候找妈妈要钱
+    // User 可以当作构造函数使用
+    // User 可以当作对象使用
+    let hd = new User();
+
+    User.prototype.show = function() {
+      console.log('后盾人输出！');
+    }
+    hd.show();        // 后盾人输出！
+    console.log(User.prototype === hd.__proto__);   // ture
+ 
+//*/
+
+  // 函数当作对象
+  function User() {};
+  User.__proto__.view = function() {
+    console.log('User的view方法输出');
+  }
+  User.render = function() {
+    console.log('User的render方法输出');
+  }
+
+  User.view();
+  User.render();
+
+
+
+
+  </script>
+</body>
+
+</html>

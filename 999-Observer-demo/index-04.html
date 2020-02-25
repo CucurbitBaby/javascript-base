@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 发布订阅者模式-04</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script type="text/javascript">
+
+
+// 1. 由于这些成员对于任何发布者对象都是通用的, 故将他们独立对象的一部分来实现很有意义  =>  成员可以订阅任何发布者
+
+// 实现一个通用的发布者对象
+let publisher = {
+  // 订阅者
+  subscribers: {
+    any: []
+  },
+  // 订阅  
+  subscribe: function(fn, type=`any`) {   // type实参默认值=any
+    if(typeof this.subscribers[type] === `undefined`) {
+      // 单例
+      this.subscribers[type] = [];
+    }
+    this.subscribers[type].push(fn);
+  },
+  // 退订/取消订阅
+  unSubscribe: function(fn, type=`any`) {
+    let newSubsctibers = [];
+    this.subscribers[type].forEach((item,i) => {
+      if(item !== fn){                    // 逆向思维啊
+        newSubsctibers.push(fn);          // type: [遍历原来的数组] 只要不和用户传入fn相等 都拿起来, 没有传递fn就清空整个type: []
+      }
+    });
+    this.subscribers[type] = newSubsctibers;
+  },
+  // publish
+  publish: function(args, type=`any`) {
+    this.subscribers[type].forEach((item, i) => {      // args, 每个用户订阅type的fn的实参
+      item(args)
+    });
+  }
+
+};
+
+
+// 发布者  构造函数
+// 定义一个函数makePublisher(), 他接受一个对象作为参数,  通过上述通用发布者的方法复制到改对象中, 从而转换成一个发布者
+function makePublisher(obj) {
+  for(let i in publisher) {
+    // publisher自身的funciton, 属性不要的哦  拷贝 给obj(即传进来的对象)
+    if(publisher.hasOwnProperty(i) && typeof publisher[i] === `function`) {
+      obj[i] = publisher[i];
+    }
+  }
+  obj.subscribers = { any: [] };      // 默认给一个any(即type name)
+};
+
+// 发布者 实现paper对象
+var paper = {
+  daily: function() {
+    // this.publish(`big news today!`)
+    this.publish(`今天的特大新闻呢, cyan中了500w`);       // 发布者的 (发布/通知/广播)方法, 的参数(实参) 桥接给了 订阅者的订阅时的fn; pulish(args, type=`any`)
+
+  },
+  monthly: function() {
+    // this.publish(`interesting analysis`, `monthly`);
+    this.publish(`每月读一下这篇文章, 可以让你乐呵乐呵 `, `monthly`);  // 发布者通知/广播的时候, 指顶了消息/数据的 类型type=`monthly`
+  }
+}
+
+
+// 将paper构造成一个发布者
+makePublisher(paper);
+
+
+// 订阅者  joe
+var joe = {
+  drinkCoffee: function(paper) {
+    // console.log(`Just read`+ paper);
+    console.log(`订阅者的订阅的fn不仅不可以用自己的数据, 还可以拿到 发布者 (发布/通知/广播)的(消息/数据):   `+ paper);
+  },
+  sundayPreNap: function(monthly) {
+     // console.log(`About to fall asleep reading this ` + monthly);
+     console.log(`订阅者的订阅的fn不仅不可以用自己的数据, 还可以拿到 发布者 (发布/通知/广播)的(消息/数据): ` + monthly);
+  }
+};
+
+// paper注册joe（即joe向paper订阅）
+paper.subscribe(joe.drinkCoffee);                 // 没有指定订阅类型, 默认是 type=`any`
+paper.subscribe(joe.drinkCoffee);                 // 同一观察者, 同一方法, 同一类型可以订阅多次哦
+paper.subscribe(joe.sundayPreNap, `monthly`);     // 指定订阅类型 monthly
+
+// 即joe为默认“any”事件提供了一个可被调用的方法，而另一个可被调用的方法则用于当“monthly”类型的事件发生时的情况。现在让我们来触发一些事件：
+// paper.daily();      // 订阅者不仅有 daily(),monthly();
+// paper.monthly();    // 
+paper.publish();       // 订阅者.....   undefined   这句是精髓
+
+
+
+// 比index.html 优雅一点
+// 发布订阅 vs 观察者
+// 1. 发布者和订阅者相互独立, 多对多的独立,
+// 2. type: [fn, fn, fn.. ]
+// 3. 要独立分离/解绑的话, 就多了一个所谓的中台了, 发布/订阅 就可以是任意对象了
+// 还有一个class版本的练习一下
+// 参考地址: https://blog.csdn.net/JimmyLuo17/article/details/78153851
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// subscribers 订阅者, 用户
+// publisher   发布者, 出版者, 出版商, 发行人
+// any         任何, 任一, 尽可能多de
+// subscribe   订阅
+// publish     发布, 通知, 广播
+
+// paper       报纸
+// daily       每天     `big news today!`   今天大新闻
+// monthly     每月     `interesting analysis`, `monthly`   “有趣的分析”,“月”
+//
+
+
+// joe
+// drinkCoffee    喝咖啡
+// `Just read`+ papaer   刚读+paaper  每天一次
+// sundayPreNap   星期天小睡前
+// `About to fall asleep reading this `     ‘读这篇文章快睡着了’+ paper  每月一次
+
+
+</script>

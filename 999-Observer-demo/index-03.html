@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 观察者模式-03</title>
+</head>
+
+<body>
+  <button id="addNewObserver">Add New Observer checkbox</button>
+  <input type="checkbox" id="mainCheckbox" />
+  <div id="observersContainer"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+// 参考: http://shenyujie.cc/2018/12/07/Observer-Pattern/
+
+/**
+ * 
+ * 观察者模式的机制
+ *   一个或者多个观察者对目标的状态感兴趣,  他们通过将自己依附(托管?寄生?闭包?)在目标对象上, 以便注册感兴趣的内容(what?)。
+ *   目标状态发生改变 并且 观察者可能对这些改变感兴趣, 就会发送一个通知(what? 目标 & 观察者的?), 调用每个观察者的更新方法。
+ *   当观察者不再对目标状态感兴趣时, 他们可以简单地将自己从中分离(移除单个fn & 移除自己)。
+ *   
+ *   
+ * 观察者模式的组成部分
+ * 1. Subject(目标): 维护一系列的观察者, 方便添加/删除观察者
+ * 2. Observer(观察者): 为那些在目标状态发生改变时需要获得通知的对象 提供一个更新接口
+ * 3. ConcreteSubject(具体目标对象): 状态发生改变时, 向Observer观察者 们? 发出通知, 存储 ConcreteObserver(目标)的状态
+ * 4. ConcreteObserver(具体观察者对象): 存储一个指向ConcreteSubject(目标对象)的引用, 实现 Observer(观察者)的更新接口, 以使自身状态与目标状态 保持一致(what? why?)。
+ */
+
+
+// 观察者构造函数
+function ObserverList() {
+  this.observerList = [];
+}
+
+ObserverList.prototype.Add = function(obj) {
+  return this.observerList.push(obj); // return 了什么?
+};
+
+ObserverList.prototype.Empty = function() {
+  return this.observerList = []; // 清空 了什么?
+};
+
+ObserverList.prototype.Count = function() {
+  return this.observerList.length; // return 了什么?
+};
+
+ObserverList.prototype.Get = function(index) {
+  if (index > -1 && index < this.observerList.length) {
+    return this.observerList[index]; // return 了什么?
+  }
+};
+
+
+ObserverList.prototype.Insert = function(obj, index) {
+  var pointer = -1;
+  if (index === 0) {
+    // unshift() 开头添加一个元素, 返回length, 修改原数组
+    this.observerList.unshift(obj);
+    pointer = index;
+  }
+};
+
+ObserverList.prototype.IndexOf = function(obj, startIndex) {
+  var i = startIndex,
+    pointer = -1;
+
+  while (i < this.observerList.length) {
+    if (this.observerList[i] === obj) pointer = i;
+    i++;
+  }
+  return pointer;
+};
+
+ObserverList.prototype.removeIndexAt = function(index) { // why? 这是什么神马玩意
+  if (index === 0) {
+    // 删除第一个元素
+    this.observerList.shift();
+  } else if (index === this.observerList.length - 1) {
+    // 删除最后一个
+    this.observerList.pop();
+  }
+};
+
+
+// 使用extend 扩展extension对象   obj有的 extendsion也有的key: 直接用obj的key=>value值覆盖;  obj有的key,extension没有的, 直接用obj的key=>value值
+function extend(obj, extension) {
+  for (var key in obj) {
+    extension[key] = obj[key];
+  }
+};
+
+// 目标对象构造函数
+// 模拟目标 Subject 和 在观察者列表上添加/删除/通知 观察者的能力
+function Subject() {
+  // 通过observers这个属性 => new 出 ObserverList所有的属性/方法
+  this.observers = new ObserverList();
+};
+
+Subject.prototype.addObserver = function(observer) { // 这里是脱裤子放屁吗? 有没有必要?
+  this.observers.Add(observer);
+};
+
+Subject.prototype.removeObserver = function(observer) {
+  this.observers.removeIndexAt(this.observers.IndexOf(observer, 0));
+};
+
+Subject.prototype.Notify = function(context) {
+  var observerCount = this.observers.Count();
+  for (var i = 0; i < observerCount; i++) {
+    // 此处的Update, 后文中会介绍  神奇之处?
+    this.observers.Get(i).Update(context);
+  }
+};
+
+// The Observer
+function Observer() {
+  // this.Update = function() {
+  //   // 此处的 Update 将在后文介绍并实现
+  // }
+}
+
+/**
+ *  观察者模式举例
+ *  描述:
+ *      添加一个目标(subject) checkbox, 通知其他的 checkbox 进行检查
+ *      添加观察者(observer) checkbox, 用于接收目标(subject) checkbox 发送的通知
+ */
+
+var controlCheckbox = document.getElementById("mainCheckbox");  // 添加一个目标 (subject) checkbox，通知其他 checkbox 进行检查
+var addBtn = document.getElementById("addNewObserver");         // click事件: 添加观察者 ( observer ) checkbox，用于接收目标 checkbox 发送的通知
+var container = document.getElementById("observersContainer");  // 观察者的UI容器
+
+// 具体目标 Subject，利用 Subject 扩展 controlCheckbox            // new Subject() => this.observers[ObserverList所有属性和方法] => 还有Subject自身的属性和方法,全部扩展到 controllCheckbox这个DOM对象身上 
+extend(new Subject(), controlCheckbox);
+
+// 点击 checkbox 会触发通知到观察者上
+controlCheckbox.onclick = new Function("controlCheckbox.Notify(controlCheckbox.checked)");    // 目标状态更改, 把状态值 通知 observerList[所有观察者] 的 Updata方法
+addBtn.onclick = AddNewObserver;                                // click事件: 添加观察者 ( observer ) checkbox，用于接收目标 checkbox 发送的通知
+
+// 具体观察者
+function AddNewObserver() {
+  // 创建需要添加的新 checkbox
+  var check = document.createElement("input");
+  check.type = "checkbox";
+
+  // 利用 Observer 类扩展 checkbox;
+  extend(new Observer(), check);                               // 这里不管是new Object(), 他需要有一个Update方法 供 subject的Notify(通知) 使用;  所以说这个demo还是观察者模式
+
+  // 重写自定义的更新行为
+  check.Update = function(value) {
+    this.checked = value;
+  };
+
+  // 为主 subject 的观察者添加新的观察者                           // 这里是添加到 目标对象 -> 被new Subject()扩展过 -> new Subject().observers = new ObserverList()  -> ObserverList().observerList = []
+  controlCheckbox.addObserver(check);
+
+  // 将观察者附到容器上
+  container.appendChild(check);
+}
+
+
+
+/**
+ * 
+ *观察者模式和发布订阅模式的区别
+ *两者有什么区别？一搜一大堆，一篇比一篇长，一篇比一篇专业。傻傻分不清楚。还是举个例子吧。
+ *
+ *    观察者模式：我办了一个补习班，学生想来我这学习，必须先报名（注册）。收齐一帮学生，开始教学，学生们听了我的课及时更新了自己的认知。我和学生们紧密相连。每个人我都认识。
+ *
+ *    发布订阅模式：我在某视频站上开了一个专栏，把我的课上传上去，喜欢的同学订阅下。后续我只要把最新课程传到视频站上就好了，学生们听了我的课亦能及时新了自己的认知。我和学生们的联系不是那么大了。我也不需要认识他们。
+ *
+ *    后者比前者多了一个类似中转站的东西（姑且称为“中台”），省了我好多事。有学生不愿意学了 ，直接找中台退订就好了，不用找我说。我发布的新课程也由中台做广播，不用我自己再一个个通知，不会影响到我自己干其他工作。
+ */
+</script>

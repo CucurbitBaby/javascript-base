@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 系统构造函数的原型体现</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  
+  // String Number Array.. 内建对象(系统对象继承&重写了Object对象)
+  let hd = {};      // new Object() 语法糖
+  console.log(hd.__proto__ === Object.prototype);   // true
+
+  let arr = [];     // new Array()
+  console.log(arr.__proto__ === Array.prototype);   // true
+
+  let str = "";     // new String()
+  console.log(str.__proto__ === String.prototype);   // true
+
+
+  let bool = true;     // new Boolean()
+  console.log(bool.__proto__ === Boolean.prototype);   // true
+
+
+  let reg = /a/i;     // new RegExp()
+  console.log(reg.__proto__ === RegExp.prototype);   // true
+
+
+  let obj = {};       // new Object()
+  console.log(reg.__proto__ === Object.prototype);   // true
+
+
+  // 测试一下
+  Array.prototype.show = function() {
+    console.log('Array作为构造函数, 在构造函数的原型上添加方法, arr 实例被new出来之后可以访问')
+  }
+
+  arr.show();
+
+  </script>
+</body>
+
+</html>

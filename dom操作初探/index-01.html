@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples dom操作初探</title>
+  <style type="text/css">
+    
+    .content {
+      display: none;
+      width: 200px;
+      height: 200px;
+      border: 2px solid red;
+    }
+    .active {
+      background-color: yellow;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <button class="active">111</button>
+    <button>222</button>
+    <button>333</button>
+    <div class="content" style="display: block;">111 message</div>
+    <div class="content">222 message</div>
+    <div class="content">333 message</div>
+  </div>
+
+
+  <script type="text/javascript">
+    
+    // 通过行内样式间接修改CSS
+    // var div = document.getElementsByTagName('div')[0];
+    // div.style.width = "100px";
+    // div.style.height = "100px";
+    // div.style.backgroundColor = "red";
+
+    // 文档对象模型 (DOM) 将 web 页面与到脚本或编程语言连接起来。
+    // 通常是指  JavaScript，但将 HTML、SVG 或 XML 文档建模为对象并不是 JavaScript 语言的一部分
+    // var div = document.getElementsByTagName('div')[0];
+    // div.style.width = "100px";
+    // div.style.height = "100px";
+    // div.style.backgroundColor = "green";
+
+    // var count = 0;
+    // div.onclick = function() {
+    //   count++;
+    //   if(count % 2 === 0) {
+    //     this.style.backgroundColor = "green";
+    //   } else {
+    //     this.style.backgroundColor = "red";
+    //   }
+    // }
+
+
+    // 选项卡功能
+    var btn = document.getElementsByTagName('button');
+    var div = document.getElementsByClassName('content');
+
+    for (var i = 0; i < btn.length; i++) {
+      (function(n) {
+      btn[n].onclick = function() {
+        for (var j = 0; j < btn.length; j++) {
+          btn[j].className = "";
+          div[j].style.display = "none";
+        }
+        this.className = "active";   
+        // div[i].style.display = "block";    // 为啥不好使?
+        div[n].style.display = "block";    // 用立即执行函数的闭包
+      }
+      }(i))
+    }
+
+  </script>
+</body>
+</html>

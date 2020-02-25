@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 闭包</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  /*
+  
+  function a() {
+    var num = 100;
+    function b () {
+      num ++;
+      console.log(num);
+    }
+
+    return b;  // b函数被返回  函数对象我们无法访问的隐式属性(系统用的): 存的由这个函数产生而产生的作用域
+  }
+
+  var demo = a();
+  demo();   // 101  a的AO早就被销毁了, 它自己的scope chain还存着a的AO呢, 销毁的也是b的AO
+  demo();   // 102  即使在生产一个新b的AO, unshift()也是在原有的scope chain基础上进行, 所以a的AO还是同一个
+  // demo保存着函数对象的引用呢,   demo没销毁, demo就能执行
+
+
+  // a函数劳动成果[[scope]](连着GO)
+  // b函数是在a函数执行时 定义的
+  // b函数定义状态 拿的a函数[[scope]]  
+  // b函数每次执行时 都在自己的执行上下文生成一个独一无二的新的AO
+  // b新建AO 扔掉AO都是自己的AO  
+  // a的AO始终没有被抛弃
+  // aAO {num: 101}
+  // aAO {num: 102}
+
+  //*/
+
+
+  /*
+    // 闭包
+    // 函数执行栈
+    function a() {
+      
+      function b() {
+        var bbb = 234;
+        console.log(aaa);
+      }
+      var aaa = 123;
+
+      // b();  // 执行b()的话, b先销毁然后a()销毁
+      
+      return b;
+      // 如果不return b出去, 就不能形成闭包了
+      // a函数销毁的时候 b还没执行呢, 但是b已经拿到了a函数的AO了
+    }
+    var glob = 100;
+    var demo = a();
+    demo();
+
+  //*/
+
+/*
+  // 1. 实现公有变量   eg: 函数累加器
+  function add() {
+    var count = 0;
+    function demo() {
+      count++;
+      console.log(count);
+    }
+    return demo;
+  }
+
+  var counter = add();
+  counter();
+  counter();
+  counter();
+  counter();
+  counter();
+  counter();
+  
+//*/
+
+/*
+  // 2. 可以做缓存(存储结构)  铺垫
+  function test() {
+    var num = 100;
+
+    function a() {
+      num++;
+      console.log(num);
+    }
+
+    function b() {
+      num--;
+      console.log(num);
+    }
+
+    return [a, b];
+
+  }
+
+  var myArr = test();
+
+  myArr[0]();   // 101
+
+  myArr[1]();   // 100
+
+//*/
+
+//*
+  // 2. 可以做缓存(存储结构) eg: eater
+  // function eater() {
+  //   var food = "";    // 相当于隐式的存储结构
+    
+  //   var obj = {
+  //     eat: function() {
+  //       console.log("我在吃 " + food);
+  //       food = "";
+  //     },
+  //     add: function(myFood) {
+  //       food = myFood;
+  //     }
+  //   }
+
+  //   return obj;
+  // }
+
+  // var eater1 = eater();
+
+  // eater1.add('banana');
+  // eater1.eat();
+
+
+  // 闭包与for循环
+  // function test() {
+  //   var arr = [];
+  //   for(var i = 0; i < 10; i++) {
+  //     (function(j) {              // 立即执行函数也有自己的AO
+  //       arr[j] = function () {
+  //         document.write(j+'  ');
+  //       };
+  //     }(i))
+  //   }
+  //   return arr;
+  // }
+
+  // var myArr = test();
+  // // myArr[0]();
+  // // myArr[1]();
+  // // myArr[2]();
+  // // ..
+  // for (var j = 0; j < 10; j++) {
+  //   myArr[j]();
+  // }
+  // // 10个10
+  // // 为什么是10? 为什么全是10?
+  // // 首先产生了闭包, 10个函数访问的就是同一个var i;
+  // // 在外部访问var i的时候, test()执行完的时候return arr; for循环也已经执行完毕了 i=10了
+  
+  // // arr[1-10, 数组的当前位是需要马上索取出来的,这是执行语句啊] = function() {..函数体又不是for时执行, 所以被折叠, 只是一个函数引用地址, 它里面的i会在外面执行函数的[[scope chain]]中查找变量i..}
+  // // 通过arguments实参对象把for中即时的i**直接传递(传递即执行了)给每个函数独立无二的AO**可以输出但是,数组中存的就不是方法了, 因为没有返回值啊,立即执行函数会销毁啊
+  // // 在外层每一次循环用立即执行函数传递解决,
+
+
+  // 闭包不一定要return 
+  // var demo;
+  // function test() {
+  //   var abc = 100;
+  //   function a() {
+  //     console.log(abc);
+  //   }
+  //   demo = a;
+  // }
+  // test();
+  // demo();
+
+  // 闭包函数每次执行, 不依赖于外部变量, 它都能产生一个不同结果
+  // function add() {
+  //   var num = 0;
+  //   function a() {
+  //     console.log(++num);
+  //   }
+  //   return a;
+  // }
+  // var myAdd = add();
+  // myAdd();
+  // myAdd();
+  // myAdd();
+
+  // 模块化开发精髓就是用闭包做的  => 不互相污染全局变量
+  // 立即执行函数
+  
+  // 缓存  
+  // function test() {
+  //   var food = "apple";
+  //   var obj = {
+  //     eatFood: function() {
+  //       if(food !== '') {
+  //         console.log('我在吃 ' + food);
+  //         food = "";
+  //       }else {
+  //         console.log('没东西吃了')
+  //       }
+  //     },
+  //     pushFood: function(myFood) {
+  //       food = myFood
+  //     }
+  //   }
+  //   return obj;
+  // }
+  // var person = test();
+  // person.eatFood();
+  // person.eatFood();
+  // person.pushFood('橙子');
+  // person.eatFood();
+
+
+  // 面试题
+  var x = 1;
+  if(function f() {}) {   // ()把里面的东西变成表达式了, 里面就不是函数定义了, f消失了
+    // 任何变量没经声明就是用就会报错, 但是除了typeof xxx
+    x += typeof f;
+  }
+
+  console.log(x);         // 1undefined
+  // console.log(Boolean(function f() {}))    // true
+//*/
+
+  </script>
+</body>
+
+</html>
+<script type="text/javascript">
+/*
+
+  闭包
+    当内部函数被保存到外部时,将会产生闭包。
+    闭包会导致原有作用域链不释放, 造成内存泄露(内存占用/内存爆炸)。
+  闭包的作用
+  1. 实现公有变量
+      eg: 函数累加器
+  2. 可以做缓存(存储结构)
+      eg: eater
+  3. 可以实现封装, 属性私有化。
+      eg: Person();
+  4. 模块化发开, 防止污染全局变量
+
+*/
+</script>

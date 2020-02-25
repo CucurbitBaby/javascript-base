@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 遍历节点树</title>
+</head>
+<body>
+  
+  <div>
+    <strong>1</strong>
+    <span></span>
+    <em></em>
+  </div>
+
+
+  <script type="text/javascript">
+    
+    var strong = document.getElementsByTagName('strong')[0];
+    // strong这个DOM对象上有很多属性和方法
+    var div = document.getElementsByTagName('div')[0];
+    console.log(div.childNodes.length);    // 7
+    // div下面的所有的子节点:
+    // 1.<div>和<strong>中间的空格换行(文本节点)
+    // 2.<strong>...</strong>(元素节点)
+    // 3.</strong>和<span>中间的空格换行(文本节点)
+    // 4.<span>...</span>(元素节点)
+    // 5.</span>和<em>间的空格换行(文本节点)
+    // 6.<em>...</em>(元素节点)
+    // 7.</em>...</div>中间的空格换行(文本节点)
+
+  </script>
+</body>
+</html>
+
+<script>
+/*
+  节点类型:
+    元素节点           -> 1
+    属性节点           -> 2
+    文本节点           -> 3
+    注释节点           -> 8
+    document          -> 9
+    DocumentFragment  -> 11
+
+
+  遍历节点树:  可不是HTML节点才算节点哦!
+    parentNode      -> 父节点(最顶端的parentNode为#document)
+    childNodes      -> 子节点们
+    firstChild      -> 第一个子节点
+    lastChild       -> 最后一个子节点
+    nextSiblins     -> 后一个兄弟节点
+    previousSibling -> 前一个兄弟节点
+ 
+
+*/
+</script>

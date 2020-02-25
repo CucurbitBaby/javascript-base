@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 原型的初步认识</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+    // 4-所有的引用类型(数组、对象、函数)__proto__属性值 指向 它的构造函数的"prototype"属性值
+
+    // let arr = ["前端人"];
+    // console.log(arr.concat("front.com"));   // __proto__( —> Array).__proto__(-> Object)
+    // // console.log(arr);
+
+    // Object.getPrototypeOf() 方法返回指定对象的原型（内部[[Prototype]]属性的值）
+    let hd = {};
+    console.log(hd);      // __proto__(-> Object)
+
+    let xj = {};
+    console.log(xj);      // __proto__(-> Object)
+
+    console.log(Object.getPrototypeOf(hd) === Object.getPrototypeOf(xj));   // true
+
+
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 面向对象多态</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+
+
+  function User() {}
+
+  User.prototype.show = function() {
+    console.log(this.description());
+  }
+
+
+
+  function Admin() {};
+  Admin.prototype = Object.create(User.prototype); 
+
+  // 方法重写1
+  Admin.prototype.description = function() {
+    return '管理员在此';
+  }
+
+
+  function Member() {};
+  Member.prototype = Object.create(User.prototype); 
+
+  // 方法重写1
+  Member.prototype.description = function() {
+    return '我是会员';
+  } 
+
+
+  function Enterprise() {};
+  Enterprise.prototype = Object.create(User.prototype); 
+
+  // 方法重写1
+  Enterprise.prototype.description = function() {
+    return '普通用户';
+  }
+
+  for(const obj of [new Admin(), new Member(), new Enterprise()]) {
+    obj.show();
+  }
+
+
+  </script>
+</body>
+</html>

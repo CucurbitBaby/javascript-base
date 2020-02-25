@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples DOM基本操作</title>
+</head>
+<body>
+  <div id="only"></div>
+  <div class="demo"></div>
+  <div></div>
+
+  <script type="text/javascript">
+    // <div>在js中显示
+    // var div = document.getElementsByTagName('div')[0];
+    // document  <html>只是一个根节点而已, 外层还有document
+    // var doc = document;
+    // console.log(doc);
+
+    // var div = document.getElementById('only');
+
+    // 实时的
+    // var div = document.getElementsByTagName('div');
+    // var demo = document.getElementsByClassName('demo')[0];
+    // // demo.remove();
+    // // console.log(div); 
+
+    // var newDiv = document.createElement('div');
+    // document.body.appendChild(newDiv);
+
+
+    // 非实时  就能照相一样, 拿到的是静态的
+    // var div = document.querySelectorAll('div');
+    // var demo = document.getElementsByClassName('demo')[0];
+    // var newDiv = document.createElement('div');
+    // document.body.appendChild(newDiv);
+
+    // console.log(div)
+    // // demo.remove();
+    // console.log(div)
+
+    // var divEle = document.getElementsByTagName('div');
+    // console.log(divEle);
+
+    // 非实时, 但是自己选中的实时  有些区别需要查看一下文档
+
+  </script>
+</body>
+</html>
+
+<script>
+  
+  // 1.对节点的增删改查
+  // 查:
+  //    css提倡能用class就不用id选择器(性能)   id一般用于顶层容器, 不要多用啊, 很初级
+  //    document对象代表整个文档
+  //    document.getElementById ie8一下不区分大小写, 如果没有id, name="only"也可以被选出来 
+  //    document.getElementsByTagName('标签名');   类数组[num]    用的频率高
+  //    document.getElementsByClassName('类名');   类数组[num]    兼容性(ie678不支持)      
+  //    document.getElementsByName('name值');      类数组[num]    只有部分标签生效, 表单, 表单元素, iframe, img    
+  //    document.querySelector();   css选择器      ie67没有 一个   ie67没有这两个方法,但是ie67不用啊
+  //    document.querySelectorAll();css选择器      ie67没有 一组   这两个方法选择出来的元素不是实时的
+</script>

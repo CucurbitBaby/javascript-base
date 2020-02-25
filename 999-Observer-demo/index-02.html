@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 观察者模式</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+<script type="text/javascript">
+// 参考: https://juejin.im/post/5bce9a35f265da0abd355715  
+
+const Observe = (function() {
+  // 防止消息队列暴露而被篡改, 将消息设置为私有变量
+  let __message = {};
+  return {
+    // 注册消息接口
+    on: function(type, fn) {
+      // 如果没有此消息不存在, 创建一个改消息类型
+      if(typeof __message[type] === "undefined") {
+        // 将执行方法 推入 该消息类型的 执行队列中
+        __message[type] = [fn];                     // 初始化的新鲜玩法 [fn] 只用一次
+      } else {
+        // 如果此次消息类型存在, 直接将执行方法推入该消息对应的执行队列中
+
+        // 越来越有意思了, 注册虽然只执行了一次, 但是私有之后__message闭包了
+        // 你没有加过type, 别人可能已经添加过了呢, 你的fn, 只能成为其中一个
+        __message[type].push(fn);                   
+
+      } 
+    },
+    // 发布消息接口,  对象.接口?  私有的属性方法,内部var就行了, 反正只能自己用;  imooc有个自执行嵌套的例子, 参考以下OOP接口
+    subscribe: function(type, args) {
+      // 如果该消息没有注册, 直接return返回
+      if(!__message[type]) return;
+
+      // 定义消息信息
+      let events = {
+        type: type,         
+        args: args || {}
+      },
+      i = 0,                          // 循环变量
+      len = __message[type].length;   // 执行队列的长度
+
+      for(;i < len; i++) {
+        // 依次执行注册消息类型 对应方法Array
+        __message[type][i].call(this, events);        // 如果每个订阅者传入的fn都闭包, 性能?
+      }
+    },
+
+    // 移除消息接口
+    off: function(type, fn) {
+      // 如果 消息类型 的 执行队列 存在
+      if(__message[type] instanceof Array) {
+        // 从最后一条一次遍历
+        let i = __message[type].length - 1;
+        for(; i >= 0; i--) {
+          // 如果存在该执行函数则移除相应的动作, 这个可以根据用户的fn对比移除
+          __message[type][i] === fn && __message[type].splice(i, 1);
+        }
+      }
+    }
+  }
+})();
+
+
+// 订阅消息
+Observe.on('say', function(data) {   // 这个匿名函数的data 点解?   因为下面广播say的时候 传入了一个{}
+  console.log(data.args.text);       // 这里的args就是上面的一个约定key 把所有的实参给了args|| {}
+})
+
+Observe.on('success', function() {   // 不依赖广播的args 自带数据; 或者依赖以下也没关系? 思考依赖什么别的数据呢, views? observe?
+  console.log('success 恭喜订阅成功!  中了500万');
+})
+
+// 发布消息
+Observe.subscribe('say', { text: "大家好, 我是渣渣飞" });
+Observe.subscribe('success');
+
+
+// 和index.html 没啥区别 listen/on 都是仍type和函数进去
+// 扔进去的参数, 执行起来也没什么区别,  publish/subscribe 
+// index.html publish广播 是不写形参直接call.arguments
+// index2.html subscribe广播 是写形参type和args 接收实参然后call一下
+// 
+</script>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>字符类</title>
+</head>
+<body>
+  
+
+<script>
+  // 字符类:
+  // var str = 'sjavascript';   // s先出现
+  // var pattern = /[js]/;      // 如果写/js/肯定是匹配不上的, []字符类 表示匹配里面任意一个字符, 先匹配到谁就是谁(子元字符串中谁先出现就是谁哦)
+  // console.log(pattern.exec(str));
+
+  // 取反
+  // var str = 'javascript';
+  // var pattern = /[^js]/;          // ^除了js之外的任意字符,  除了js之外a最先出现
+  // console.log(pattern.exec(str));
+
+  // var str = 'javascript';
+  // var pattern = /[a-z]/;            // a-z的26个英文字母
+  // console.log(pattern.exec(str));
+
+  // var str = 'javascript';
+  // var pattern = /[c-d]/;               // a-z的26个英文字母  任意位置开始结束  c<=d才行哦
+  // console.log(pattern.exec(str));
+
+  // var str = 'javascript';
+  // var pattern = /[c-c]/;             // d-c报错
+  // console.log(pattern.exec(str));
+
+  // 匹配中文
+  // var str = 'Alex帅';
+  // var pattern = /[\u4e00-\u9fa5]/;      // 一万多个字符, 匹配到了帅, 衰, 甩...中文都行
+  // console.log(pattern.exec(str));
+
+  // var str = 'JavaScript'; 
+  // var pattern = /[a-zA-Z]/;             // a-zA-Z  -> J
+  // console.log(pattern.exec(str));
+
+  // var str = '00544';
+  // var pattern = /[0-9]/;                // 0
+  // console.log(pattern.exec(str));
+
+
+  // var str = 'JavaScript2.0';
+  // var pattern = /[a-zA-Z0-9]/;          // J
+  // console.log(pattern.exec(str));
+
+  // /[a-zA-Z0-9@_asdf]/    // 还可以继续添加 @ _ dafaf
+  // /[^\n]/                // 假如我能想的字符我都加进去[..]了,  除了\n不要 
+  // /./                    // 别名: [^\n] 不能匹配换行符
+
+  // var str = '3.1415926';
+  // var pattern = /./;
+  // console.log(pattern.exec(str));
+
+  // var str = '3.1415926';
+  // var pattern = /\./;                 // [.] 没有\就匹配出[3]
+  // console.log(pattern.exec(str));
+
+  // var str = '\n';
+  // var pattern = /./;               // null
+  // console.log(pattern.exec(str));
+
+  // /[a-zA-Z0-9_]/         //  别名: /\w/
+  // /[^a-zA-Z0-9_]/        //  别名: /\W/  除了[a-zA-Z0-9_]
+
+  // var str = '_@';
+  // var pattern = /\w/;            // _
+  // console.log(pattern.exec(str));
+
+  // var str = '00544';
+  // var pattern = /\d/;              // \d 别名: [0-9]   \D 别名: [^0-9]
+  // console.log(pattern.exec(str));  
+
+  // var str = '   ';
+  // var pattern = /\s/;              // \s 别名: [空格/Tab]  
+  // console.log(pattern.exec(str));
+  // \S 别名: [^空格/Tab] 
+
+  var str = '1 1';            // \s 可以不写在字符类[]里, 但并不代表不能写在[]里
+  var pattern = /[\s\d]/;     // 1 空格或者数字 挑一个
+  console.log(pattern.exec(str));
+
+</script>
+</body>
+</html>

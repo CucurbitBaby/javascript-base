@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 多继承造成的困扰</title>
+</head>
+<body>
+
+
+  <script type="text/javascript">
+    
+//*
+
+  // sub: 子类, sup: 父类
+  function extend(sub, sup) {
+    sub.prototype = Object.create(sup.prototype);
+    sub.prototype.constructor = Admin;
+    Object.defineProperty(sub.prototype, "constructor", {
+      value: sub,
+      enumerable: false
+    });
+  }
+
+  function Credit(name, age) {};
+  Credit.prototype.total = function() {
+    console.log('积分统计');
+  }
+  extend(Request, Credit);
+
+
+
+  function Request(name, age) {};
+  Request.prototype.ajax = function() {
+    console.log('请求数据');
+  }
+  extend(User, Request);
+
+  function User(name, age) {
+    this.name = name;
+    this.age = age;
+  };
+  User.prototype.show = function() {
+    console.log(this.name, this.age);
+  }
+
+
+  function Admin(name, age) {
+
+    User.call(this, name, age)
+  };
+
+
+  extend(Admin, User);
+  let admin = new Admin('向军', 19);
+  admin.show();
+  admin.ajax();
+  admin.total();
+  // total和ajax本身没有什么关系,  为了让admin使用total ajax让他们(Request, Credit强制继承了一波)
+
+  // 再加一个Member() 需要User的某些东西 要强制继承了很多Request, Credit
+  
+//*/
+     
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 数组去重</title>
+</head>
+
+<body>
+  <script type="text/javascript">
+  // 排过序的数组去重性能更好
+  // 健壮性: 1.性能, 2.功能  
+  function unique(array, isSorted, callback) {
+    var res = [];
+    var seen;
+    // 常用多态套路
+    if(typeof isSorted !== 'boolean') {
+      callback = isSorted;
+      isSorted = false;
+    }
+
+    for(var i = 0, len = array.length; i<len; i++) {
+      // 判断callback是否存在
+      var computed = callback ? callback(array[i]) : array[i];
+
+      // 判断数组是否排序过, 无序的数组当前和上一个对比对于去重没有意义
+      if(isSorted) {
+        // 与或非运算顺序
+        if(!i || seen !== computed) {
+          console.log('执行了=>');
+          res.push(computed);
+        }
+        seen = computed;
+      } 
+      // 如果没排序过, 用indexOf
+      else if(res.indexOf(computed) === -1) {
+        res.push(computed);
+      }
+    }
+    return res;
+  }
+
+
+
+
+  var testObj = {};
+  var arr = [1, 1, 2, 2, 3, 3, {}, {}, 5, 6, 6, testObj, testObj, 'max', 'max', 'a', "A"]
+
+  // console.log(unique(arr));
+  // console.log(unique(arr, false));
+  // callback表示当前数组是否要区分大小写去重
+  console.log(unique(arr, function(name) {
+    // console.log('执行了callback')
+    return typeof name == 'string' ? name.toLowerCase() : name;
+  }));
+
+
+  </script>
+</body>
+
+</html>

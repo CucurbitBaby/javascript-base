@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples try...catch</title>
+</head>
+<body>
+  
+</body>
+</html>
+
+<script>
+
+/*
+ 
+ try{}catch(e){}finally{}
+
+ Error.name的六种对应的信息:
+ 1. EvalError: eval()的使用与定义不一致
+ 2. RangeError: 数值越界
+ 3. ReferenceError: 非法或不能识别的引用数值
+ 4. SyntaxError: 发生语法解析错误
+ 5. TypeError: 操作数类型错误
+ 6. URIError: URI处理函数使用不当
+
+
+  基于es3.0 + es5.0的新增方法, es3.0和es5.0产生冲突的部分, 使用的是es3.0的方法
+  如果是es5.0的严格模式 那么es3.0的和es5.0产生冲突的部分就是使用es5.0的, 否则使用es3.0的
+
+  es3.0和es5.0的冲突部分
+  启用es5.0 整个页面最顶端写一句"use strict"  别用strict()哦 否则不支持的话, 下面的程序不会跑了, "use strict" 就当成一句话表达式
+  1. es5.0不能使用arguments.callee
+      function test() {
+        console.log(arguments.callee)
+      }
+      test();
+
+  2.推荐使用with，在 ECMAScript 5 严格模式中该标签已被禁止。推荐的替代方案是声明一个临时变量来承载你所需要的属性
+
+
+  3.变量赋值前 必须声明, 没有暗示全局变量
+
+  4.局部的this必须赋值, 赋予什么就是什么
+      "use strict"
+
+      function test() {
+        console.log(this);    // undefined 和 window
+      }
+
+      test();       // undefined
+      new test();   // test{}  要么就new
+
+
+  5. 拒绝重复属性和阐述
+      "use strict"  语法报错
+      function test(name, name) {
+        console.log(name);    
+      }
+      test(1)
+      
+      "use strict"   拒绝, 不报错  遵循后面的
+      var obj = {
+        name: 123,
+        name: 234    
+      }
+
+  6. eval()不同
+
+
+ */
+
+</script>
