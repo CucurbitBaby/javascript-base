@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译(下) - 01</title>
+</head>
+
+<body>
+  <script>
+  
+  a = 100;
+  function demo(e) {
+    function e() {};
+    arguments[0] = 2;
+    console.log(e);
+    if(a) {
+      var b = 123;
+      function c() {
+        // 猪都能做出来
+      }
+    }
+    var c; 
+    a = 10;
+    var a;
+    console.log(b);
+    f = 123;
+    console.log(c);
+    console.log(a);
+  }
+
+  var a;
+  demo(1);
+  console.log(a);
+  console.log(f);
+
+  // 全局预编译
+  // 1. 找出变量声明给GO的key, 值为undefined;
+  // GO: {
+  //   a: undefined
+  // }
+  // 2. 形实统一
+  // 3. 找出全局函数声明给GO的key, 值为函数体;
+  // GO: {
+  //   a: undefined,
+  //   demo: ƒ demo () {},
+  // }
+  // 逐行执行全局代码
+  // a = 100;            // GO.a = 100;
+  // function demo(e) {  // 提升过了 忽略
+  //   // .. 
+  // }
+  // var a;              // 全局提升过了 忽略
+  // demo(1);  执行前一刻完成了函数的预编译
+      // 1. 找出函数内的变量声明和形参给AO的key, 值为undefined
+      // AO: {
+      //   e: undefined,
+      //   b: undefined,
+      //   c: undefined,
+      //   a: undefined,
+      // }
+      // 2. 形实统一   
+      // AO: {
+      //   e: 1,
+      //   b: undefined,
+      //   c: undefined,
+      //   a: undefined,
+      // }
+      // 3. 找出函数内的函数声明给AO的key, 值为函数体
+      // AO: {
+      //   e: ƒ e () {},
+      //   b: undefined,
+      //   c: undefined,    // 不是ƒ c () {}, 因为提不出来
+      //   a: undefined,
+      // }
+      // 逐行执行函数内的代码
+      // function e() {};       // 忽略
+      // arguments[0] = 2;      // 就是操作的e?  的话AO.e 就等于 2了
+      // console.log(e);        // 2
+      // if(a) {                // 不成立
+      //   var b = 123;
+      //   function c() {
+      //     // 猪都能做出来  这里没被执行, var和提升为undefined
+             // 不成立代码块的function不可以被提升     
+      //   }
+      // }
+      // var c;                 // 忽略
+      // a = 10;                // AO.a = 10;
+      // var a;                 // 忽略
+      // console.log(b);        // undefined
+      // f = 123;               // GO.f = 123
+      // console.log(c);        // undefined
+      // console.log(a);        // 10
+  // demo(1);          
+  // console.log(a);   // undefined
+  // console.log(f);   // 100
+
+
+  </script>
+</body>
+
+</html>

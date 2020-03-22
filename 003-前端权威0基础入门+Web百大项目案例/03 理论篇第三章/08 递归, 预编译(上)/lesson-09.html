@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 09</title>
+</head>
+
+<body>
+  <script>
+  global = 100;
+
+  function fn() {
+    console.log(global);
+    global = 200;
+    console.log(global);
+
+    var global = 300;
+  }
+
+  fn();
+  var global;
+  // 全局预编译
+  // 1. 将变量作为GO的属性名, 值为undefiend
+  // GO: {
+  //   global: undefined
+  // }
+
+  // 3. 找到函数声明给GO的key,值为函数体
+  // GO: {
+  //   global: undefined,
+  //   fn: ƒ fn () {}
+  // }
+  // 逐行执行
+  // global = 100;    //  GO.global = 100;
+  //  function fn() {     // 忽略
+  //  
+  // fn();执行前一刻, 函数预编译
+    // 1. 将变量和形参作为AO的属性名, 值为undefiend
+    // AO: {
+    //  global: undefined,
+    // }
+    // 逐行执行函数里的代码
+    // console.log(global);  // undefiend
+    // global = 200;         // AO.global = 200;
+    // console.log(global);  // 200
+    // var global = 300;     // var global 忽略; AO.global=300;
+  // fn();
+  // var global;  // 忽略
+
+  </script>
+</body>
+
+</html>

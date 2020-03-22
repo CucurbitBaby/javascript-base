@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 04</title>
+</head>
+<body>
+  
+
+
+  <script>
+    
+  function test(a, b) {
+    // body...
+    console.log(a);
+    c = 0;
+    var c;
+    a = 3;
+    b = 2;
+    console.log(b);
+    function b() {};
+    function d() {};
+    console.log(b);
+  }
+
+  test(1);
+
+  // 1. 找形参和变量声明, 将变量和形参名作为AO属性名, 值为undefined
+  // AO: {
+  //   a: undefined,
+  //   b: undefined,
+  //   c: undefined
+  // }
+
+  // 将实参值和形参统一
+  // AO: {
+  //   a: 1,
+  //   b: undefined,
+  //   c: undefined
+  // }
+
+  // 在函数体里面找函数声明, 值赋予函数体
+  // AO: {
+  //   a: 1,
+  //   b: ƒ b () {},
+  //   c: undefined,
+  //   d: ƒ d () {},
+  // }
+
+  // 逐行执行代码**********************
+  // console.log(a);  // 1
+
+  // c = 0;
+  // AO: {
+  //   a: 1,
+  //   b: ƒ b () {},
+  //   c: 1,
+  //   d: ƒ d () {},
+  // }
+
+  // var c;  // 忽略 已经被提升过了;
+
+  // a = 3;
+  // AO: {
+  //   a: 3,
+  //   b: ƒ b () {},
+  //   c: 1,
+  //   d: ƒ d () {},
+  // }
+  
+
+  // b = 2;
+  // AO: {
+  //   a: 3,
+  //   b: 2,
+  //   c: 1,
+  //   d: ƒ d () {},
+  // }
+  
+  // console.log(b);   // 2;  AO.2  === 2;
+  // function b() {};  // 忽略 已经被提升过了;
+  // function d() {};  // 忽略 已经被提升过了;
+  // console.log(b);   // 2;  AO.2  === 2;
+
+  </script>
+</body>
+</html>

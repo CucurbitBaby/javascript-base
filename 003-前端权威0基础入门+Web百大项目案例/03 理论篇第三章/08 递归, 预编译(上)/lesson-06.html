@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 06</title>
+</head>
+<body>
+  
+
+
+  <script>
+    
+  // 全局变量提升
+  // console.log(a); // undefined
+  // var a = 123;
+  
+  // console.log(a);    // ƒ a() {}
+  // var a = 123;
+  // function a() {};
+
+  // 全局预编译
+  console.log(a);   // ƒ a () {}
+  var a = 123;
+  function a() {};
+  console.log(a);   // 123
+  console.log(window.a);   // 123
+  // 生成一个GO对象(Global Object)
+  // 找形参和变量声明, 将变量和形参名作为GO属性名, 值为undefined
+  // GO: {
+  //   a: undefined,
+  // }
+  // ..统一
+  
+  // 找到函数体里面函数声明,给GO的key,值赋予函数体
+  // GO: {
+  //   a: ƒ a () {},
+  // }
+
+  // 逐行执行
+  // console.log(a);
+
+  // var a = 123;  var a 忽略; a = 123;
+  // GO: {
+  //   a: 123,
+  // }
+  // console.log(123);  // 123
+  </script>
+</body>
+</html>

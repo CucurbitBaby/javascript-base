@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 11</title>
+</head>
+
+<body>
+  <script>
+  
+  function bar() {
+    return foo;
+    foo = 10;
+    function foo() {
+
+    }
+    var foo = 11;
+  }
+
+  document.write(bar());
+
+  // 全局预编译
+  // 1. 找出变量声明给GO的属性, 值为undefined
+  // AO: {}
+  // 2. 形参实参统一
+  // 3. 找出函数声明给GO的属性, 值为函数体
+  // AO: {
+  //   bar: ƒ bar () {}
+  // }
+  // 逐行执行全局代码
+  // function bar() { .. 提升过了忽略; 
+  // document.write(
+  //    bar();函数执行前一刻, 函数预编译
+  //    1. 找出函数内变量声明和形参给AO的属性, 值为undefined
+  //    AO: {
+  //      foo: undefined,
+  //    }
+  //    2. 形实统一
+  //    3. 找函数内的函数声明给AO的属性, 值为函数体
+  //    AO: {
+  //      foo: ƒ foo () {},
+  //    }
+  //    // 逐行执行函数内的代码
+        // return foo;     // reutnr undefined;
+        // foo = 10;
+        // function foo() {
+
+        // }
+        // var foo = 11;
+  //    bar();  因此全局的write()应该是一个 ƒ foo () {}
+  // )
+
+
+  </script>
+</body>
+
+</html>

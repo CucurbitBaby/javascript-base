@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 05</title>
+</head>
+<body>
+  
+
+
+  <script>
+    
+  function test(a, b) {
+    console.log(a);
+    console.log(b);
+
+    var b = 123;
+    console.log(b);
+
+    a = 123;
+    console.log(a);
+
+    function a() {};
+    var a;
+
+    b = 234;
+
+    var b = function() {};
+    console.log(a);
+    console.log(b);
+
+  }
+
+  test(1);
+
+  // 预编译执行三部曲
+  // 1. 生成AO对象, 提升变量(找到形参和var给AO属性,值为undefined)
+  // AO: {
+  //   a: undefined,
+  //   b: undefined,
+  // }
+
+  // 2. 将实参和形参统一
+  // AO: {
+  //   a: 1,
+  //   b: undefined,
+  // }
+
+  // 3. 找到函数体里面函数声明,给AO的key,值赋予函数体
+  // AO: {
+  //   a: ƒ a () {},
+  //   b: undefined,
+  // }
+
+  // 逐行执行代码
+  // console.log(a);   //  ƒ a () {}
+  // console.log(b);   //  undefined
+
+  // var b = 123;      // var b 忽略; AO.b = 123;
+  // console.log(b);   // 123
+
+  // a = 123;          // AO.a = 123;
+  // console.log(a);   // 123
+
+  // function a() {};  // 忽略
+  // var a;            // 忽略
+
+  // b = 234;          // AO.b = 234;
+
+  // var b = function() {};    // var b 忽略; AO.b = ƒ () {}
+  // console.log(a);           // 123
+  // console.log(b);           // ƒ () {}
+  </script>
+</body>
+</html>

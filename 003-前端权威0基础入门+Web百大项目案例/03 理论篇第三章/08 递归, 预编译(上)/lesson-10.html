@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 10</title>
+</head>
+
+<body>
+  <script>
+  
+  function test() {
+    console.log(b);
+    if(a) {
+      var b = 100;
+    }
+    c = 234;
+    console.log(c);
+  }
+
+  var a;
+  test();
+  a = 10;
+  console.log(c);
+
+  // 全局预编译
+  // 1. 找出变量声明给GO的属性, 值为undefined;
+  // GO: {
+  //   a: undefined,
+  // }
+
+  // 2. 形参实参统一 忽略
+  // 3. 找到函数声明函数名给GO的属性, 值为函数体;
+  // GO: {
+  //   a: undefined,
+  //   test: ƒ test () {}
+  // } 
+  // 逐行执行代码
+  // function test() { .. 提升过了 忽略
+  // var a;               提升过了 忽略
+
+  // test(); 执行前一刻 函数预编译
+      // 1. 找出函数里变量声明和形参赋值给AO的key, 值为undefined;
+      // AO: {
+      //   b: undefined,     // 穿透, ES5 没有块级作用域
+      // }
+      // 2. 实参和形参统一
+      // 3. 找出函数里的函数声明给AO的key, 值为函数体
+      // 逐行执行函数体内的代码
+      // console.log(b);      // undefined 按照猜测是error啊
+      // if(a) {              // 此时GO.a === undefined
+      //   var b = 100;
+      // }
+      // console.log(b);      // undefined 按照猜测是error啊
+      // c = 234;             // GO.c = 234
+      // console.log(c);      // 234
+  // test();
+  // a = 10;          // GO.a = 10;
+  // console.log(c);  // 234
+
+  </script>
+</body>
+
+</html>

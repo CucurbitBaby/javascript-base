@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Examples 预编译 - 02</title>
+</head>
+<body>
+  
+
+
+  <script>
+    
+  // imply global(暗示全局变量)
+  // 任何变量如果变量未经声明 就赋值, 此变量就为全局对象所有。
+  // 一切声明的全局变量，全是window的属性。
+
+  function fn(a) {
+    console.log(a);   // ƒ a () {}
+    var a = 123;
+
+    console.log(a);   // 123
+    function a () {};
+    
+    console.log(a);   // 123
+
+    var b = function() {};
+    console.log(b);   // ƒ b () {}
+
+    function d() {};
+  }
+
+  fn(1);
+  // 预编译发生在函数执行的前一刻
+
+  // 1. 生成一个AO对象(Activation Object)
+  // 1.1 这个活动对象理解的作用域, 其实叫 执行期上下文
+  // 1.2 找形参和变量声明, 将变量和形参名作为AO属性名, 值为undefined
+  // AO: {
+  //   a: undefined,
+  //   // 然后找到var a, var b
+  //   b: undefined
+  // }
+
+  // 2. 将实参值和形参统一
+  // AO: {
+  //   a: 1,
+  //   // 然后找到var a, var b
+  //   b: undefined
+  //   // 将实参值和形参统一
+  // }
+
+  // 3. 在函数体里面找函数声明, 值赋予函数体
+  // AO: {
+  //   a: ƒ a () {},
+  //   // 在函数体里面找函数声明, 值赋予函数体
+  //   b: undefined,
+  //   d: ƒ d () {}
+  //   // 在函数体里面找函数声明, 值赋予函数体
+  // }
+
+  // 然后逐行执行
+  // console.log(a);   去AO对象找a 输出 ƒ a () {}
+  // var a = 123;      var a 已经被提升过了 不看了; AO.a = 123;
+  // console.log(a);   123;
+  // function a () {}; function 已经被提升过了 不看了;
+  // var b = function() {}; var b 不看了; AO.b = function() {};
+  // function d() {};  function 已经被提升过了 不看了;
+  </script>
+</body>
+</html>
